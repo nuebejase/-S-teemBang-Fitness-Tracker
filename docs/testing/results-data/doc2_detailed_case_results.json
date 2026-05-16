@@ -1,0 +1,75 @@
+{
+  "rows": [
+    {
+      "test_case_id": "SBR-001",
+      "actual_result": "Register returns token; member role in /me.",
+      "pass_fail": "Pass",
+      "tester_name": "pytest (steambang_backend/tests)",
+      "date_executed": "2026-05-16"
+    },
+    {
+      "test_case_id": "SBR-003",
+      "actual_result": "Login returns JWT; demo /me OK.",
+      "pass_fail": "Pass",
+      "tester_name": "pytest (steambang_backend/tests)",
+      "date_executed": "2026-05-16"
+    },
+    {
+      "test_case_id": "SBD-002",
+      "actual_result": "Steps sync updates today_steps.",
+      "pass_fail": "Pass",
+      "tester_name": "pytest (steambang_backend/tests)",
+      "date_executed": "2026-05-16"
+    },
+    {
+      "test_case_id": "SBA-001",
+      "actual_result": "Workout created with calories.",
+      "pass_fail": "Pass",
+      "tester_name": "pytest (steambang_backend/tests)",
+      "date_executed": "2026-05-16"
+    },
+    {
+      "test_case_id": "SBG-001",
+      "actual_result": "Goal created 201.",
+      "pass_fail": "Pass",
+      "tester_name": "pytest (steambang_backend/tests)",
+      "date_executed": "2026-05-16"
+    },
+    {
+      "test_case_id": "SBAn-001",
+      "actual_result": "7 trend points for demo user.",
+      "pass_fail": "Pass",
+      "tester_name": "pytest (steambang_backend/tests)",
+      "date_executed": "2026-05-16"
+    },
+    {
+      "test_case_id": "SBAd-001",
+      "actual_result": "Admin stats 200 with admin token.",
+      "pass_fail": "Pass",
+      "tester_name": "pytest (steambang_backend/tests)",
+      "date_executed": "2026-05-16"
+    },
+    {
+      "test_case_id": "SBS-003",
+      "actual_result": "Admin stats 401 without auth.",
+      "pass_fail": "Pass",
+      "tester_name": "pytest (steambang_backend/tests)",
+      "date_executed": "2026-05-16"
+    },
+    {
+      "test_case_id": "SBGen-001",
+      "actual_result": "Health OK.",
+      "pass_fail": "Pass",
+      "tester_name": "pytest (steambang_backend/tests)",
+      "date_executed": "2026-05-16"
+    },
+    {
+      "test_case_id": "SBGen-002",
+      "actual_result": "Mobile-width smoke passed.",
+      "pass_fail": "Pass",
+      "tester_name": "IDE browser smoke (Cursor)",
+      "date_executed": "2026-05-16"
+    }
+  ],
+  "last_sync": "2026-05-16"
+}

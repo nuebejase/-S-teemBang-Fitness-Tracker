@@ -1,0 +1,61 @@
+{
+  "purpose": "UAT scenarios for (S)TeemBang (minimum 5; 7 listed).",
+  "uat_cases": [
+    {
+      "uat_id": "UAT-SB-001",
+      "module": "Authentication",
+      "scenario_title": "Register, log out, log back in as member",
+      "role": "Member",
+      "priority": "Critical",
+      "expected_business_result": "Scenario UAT-SB-001 completes without developer help."
+    },
+    {
+      "uat_id": "UAT-SB-002",
+      "module": "Dashboard",
+      "scenario_title": "View dashboard stats and sync steps",
+      "role": "Member",
+      "priority": "Critical",
+      "expected_business_result": "Scenario UAT-SB-002 completes without developer help."
+    },
+    {
+      "uat_id": "UAT-SB-003",
+      "module": "Workouts",
+      "scenario_title": "Log a workout and see calories on dashboard",
+      "role": "Member",
+      "priority": "High",
+      "expected_business_result": "Scenario UAT-SB-003 completes without developer help."
+    },
+    {
+      "uat_id": "UAT-SB-004",
+      "module": "Goals",
+      "scenario_title": "Set a daily step goal and view progress",
+      "role": "Member",
+      "priority": "High",
+      "expected_business_result": "Scenario UAT-SB-004 completes without developer help."
+    },
+    {
+      "uat_id": "UAT-SB-005",
+      "module": "Analytics",
+      "scenario_title": "Open analytics and change trend period",
+      "role": "Member",
+      "priority": "High",
+      "expected_business_result": "Scenario UAT-SB-005 completes without developer help."
+    },
+    {
+      "uat_id": "UAT-SB-006",
+      "module": "Admin",
+      "scenario_title": "Admin views platform stats; member cannot",
+      "role": "Admin + Member",
+      "priority": "Critical",
+      "expected_business_result": "Scenario UAT-SB-006 completes without developer help."
+    },
+    {
+      "uat_id": "UAT-SB-007",
+      "module": "Access control",
+      "scenario_title": "Guest/member blocked from admin routes and APIs",
+      "role": "Mixed",
+      "priority": "Critical",
+      "expected_business_result": "Scenario UAT-SB-007 completes without developer help."
+    }
+  ]
+}

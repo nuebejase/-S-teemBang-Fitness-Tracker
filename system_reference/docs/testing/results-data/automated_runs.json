@@ -1,0 +1,38 @@
+{
+  "description": "Imported from testing-data/06_automated_verification_2026-05-13.json; append new runs as you execute tests.",
+  "runs": [
+    {
+      "run_id": "auto-2026-05-13-001",
+      "when": "2026-05-13",
+      "source_file": "../testing-data/06_automated_verification_2026-05-13.json",
+      "backend": {
+        "command": "cd frinstore_backend && .venv\\Scripts\\python.exe -m pytest tests -v --tb=short",
+        "result": "7 passed",
+        "tests_file": "frinstore_backend/tests/test_api.py",
+        "evidence_path": "docs/testing/results-data/evidence/pytest-log.txt (optional)"
+      },
+      "frontend": {
+        "command": "cd frinstore_frontend && npm run build",
+        "result": "Succeeded (vue-tsc -b && vite build)",
+        "evidence_path": "[Optional]"
+      },
+      "notes": "FastAPI TestClient: health, catalog seed, register/login/me/order flow, RBAC guards, admin CRUD + order status, invalid login."
+    },
+    {
+      "run_id": "browser-smoke-2026-05-14",
+      "when": "2026-05-14",
+      "source_file": "browser_smoke_run_2026-05-14.json",
+      "backend": {
+        "command": "Invoke-WebRequest http://127.0.0.1:8000/api/health",
+        "result": "{\"status\":\"ok\"}",
+        "evidence_path": ""
+      },
+      "frontend": {
+        "command": "Cursor IDE browser session (localhost:5173)",
+        "result": "Pass — see browser_smoke_run_2026-05-14.json",
+        "evidence_path": ""
+      },
+      "notes": "Updates doc2_execution_log_results.json and doc2_detailed_case_results.json rows."
+    }
+  ]
+}

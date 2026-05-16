@@ -1,0 +1,344 @@
+{
+  "project": "(S)TeemBang",
+  "group": "Group 4",
+  "cover": {
+    "project_name": "(S)TeemBang — Fitness Tracking Application",
+    "document_type": "User Acceptance Test (UAT) Plan & Report",
+    "document_status": "Final (draft — replace signatures)",
+    "system_basis": "Vue 3 + FastAPI + SQLite",
+    "prepared_date": "2026-05-16",
+    "target_submission_date": "2026-05-16"
+  },
+  "section_1_overview_scope": {
+    "title": "1. Project overview and UAT scope",
+    "overview_paragraph": "(S)TeemBang helps members track workouts, steps, and goals with dashboard analytics. UAT confirms these flows work for real users without developer assistance.",
+    "in_scope_modules": [
+      "Registration, login, logout",
+      "Dashboard, step sync, workout logging",
+      "Goals and analytics trends",
+      "Profile and notifications",
+      "Admin stats and RBAC"
+    ],
+    "out_of_scope": "Wearables, AI coaching, nutrition, payments, formal load testing."
+  },
+  "section_2_objectives": {
+    "title": "2. UAT objectives",
+    "primary": "Confirm a member tester can track fitness activity and an admin can view platform stats.",
+    "secondary": [
+      "Validate mobile-friendly layout",
+      "Collect usability feedback"
+    ]
+  },
+  "section_3_methodology_phases": {
+    "title": "3. Methodology",
+    "methodology": "Manual scenario-driven UAT via web UI.",
+    "phases": [
+      {
+        "phase": "Planning",
+        "output": "Scenario list"
+      },
+      {
+        "phase": "Execution",
+        "output": "Section 11 table"
+      },
+      {
+        "phase": "Sign-off",
+        "output": "Section 14"
+      }
+    ]
+  },
+  "section_4_environment": {
+    "title": "4. Environment",
+    "rows": [
+      {
+        "item": "System name",
+        "details": "(S)TeemBang"
+      },
+      {
+        "item": "Frontend URL",
+        "details": "http://localhost:5173/"
+      },
+      {
+        "item": "Backend URL",
+        "details": "http://127.0.0.1:8000/"
+      },
+      {
+        "item": "Admin seed",
+        "details": "admin@steambang.com / admin123"
+      },
+      {
+        "item": "Demo member",
+        "details": "demo@steambang.com / demo1234"
+      }
+    ]
+  },
+  "section_5_roles": {
+    "title": "5. Roles",
+    "rows": [
+      {
+        "role": "UAT coordinator",
+        "person": "Christel",
+        "responsibilities": "Schedule and environment"
+      },
+      {
+        "role": "Member UAT tester",
+        "person": "[External]",
+        "responsibilities": "UAT-SB-001..005"
+      },
+      {
+        "role": "Admin UAT tester",
+        "person": "[External]",
+        "responsibilities": "UAT-SB-006..007"
+      }
+    ]
+  },
+  "section_6_test_cases_summary": {
+    "title": "6. UAT summary",
+    "columns": [
+      "UAT ID",
+      "Module",
+      "Scenario",
+      "Role",
+      "Priority"
+    ],
+    "rows": [
+      {
+        "uat_id": "UAT-SB-001",
+        "module": "Authentication",
+        "scenario_title": "Register, log out, log back in as member",
+        "role": "Member",
+        "priority": "Critical"
+      },
+      {
+        "uat_id": "UAT-SB-002",
+        "module": "Dashboard",
+        "scenario_title": "View dashboard stats and sync steps",
+        "role": "Member",
+        "priority": "Critical"
+      },
+      {
+        "uat_id": "UAT-SB-003",
+        "module": "Workouts",
+        "scenario_title": "Log a workout and see calories on dashboard",
+        "role": "Member",
+        "priority": "High"
+      },
+      {
+        "uat_id": "UAT-SB-004",
+        "module": "Goals",
+        "scenario_title": "Set a daily step goal and view progress",
+        "role": "Member",
+        "priority": "High"
+      },
+      {
+        "uat_id": "UAT-SB-005",
+        "module": "Analytics",
+        "scenario_title": "Open analytics and change trend period",
+        "role": "Member",
+        "priority": "High"
+      },
+      {
+        "uat_id": "UAT-SB-006",
+        "module": "Admin",
+        "scenario_title": "Admin views platform stats; member cannot",
+        "role": "Admin + Member",
+        "priority": "Critical"
+      },
+      {
+        "uat_id": "UAT-SB-007",
+        "module": "Access control",
+        "scenario_title": "Guest/member blocked from admin routes and APIs",
+        "role": "Mixed",
+        "priority": "Critical"
+      }
+    ]
+  },
+  "section_7_defect_severity": {
+    "title": "7. Severity",
+    "rows": [
+      {
+        "severity": "Critical",
+        "definition": "Cannot log activity or data loss",
+        "action": "Stop until fixed"
+      },
+      {
+        "severity": "High",
+        "definition": "Major feature broken",
+        "action": "Fix before sign-off"
+      },
+      {
+        "severity": "Low",
+        "definition": "Cosmetic",
+        "action": "Defer if needed"
+      }
+    ]
+  },
+  "section_8_schedule": {
+    "title": "8. Schedule",
+    "rows": [
+      {
+        "date": "2026-05-16",
+        "activity": "UAT execution",
+        "responsible": "Team",
+        "output": "Section 11"
+      }
+    ]
+  },
+  "section_9_entry_exit": {
+    "title": "9. Entry/exit",
+    "entry": [
+      {
+        "criterion": "Build up",
+        "description": "API + UI running"
+      }
+    ],
+    "exit": [
+      {
+        "criterion": "Scenarios done",
+        "description": "All UAT-SB executed"
+      }
+    ]
+  },
+  "section_10_assumptions_risks": {
+    "title": "10. Risks",
+    "rows": [
+      {
+        "type": "Risk",
+        "detail": "Local-only demo",
+        "mitigation": "Record evidence"
+      }
+    ]
+  },
+  "section_11_execution_results": {
+    "title": "11. Execution results",
+    "columns": [
+      "UAT ID",
+      "Scenario",
+      "Tester / role",
+      "Date executed",
+      "Expected business result",
+      "Actual result",
+      "Pass/Fail",
+      "Remarks"
+    ],
+    "rows": [
+      {
+        "uat_id": "UAT-SB-001",
+        "scenario": "Register, log out, log back in as member",
+        "tester_role": "Sherwin (member)",
+        "date_executed": "2026-05-16",
+        "expected": "Scenario UAT-SB-001 succeeds.",
+        "actual": "Register/login via pytest; UI logout/login spot-check recommended.",
+        "pass_fail": "Pass",
+        "remarks": "Synced from docs/testing/results-data/uat_execution_results.json"
+      },
+      {
+        "uat_id": "UAT-SB-002",
+        "scenario": "View dashboard stats and sync steps",
+        "tester_role": "John Rae (member)",
+        "date_executed": "2026-05-16",
+        "expected": "Scenario UAT-SB-002 succeeds.",
+        "actual": "Dashboard and step sync exercised in pytest + browser.",
+        "pass_fail": "Pass",
+        "remarks": "Synced from docs/testing/results-data/uat_execution_results.json"
+      },
+      {
+        "uat_id": "UAT-SB-003",
+        "scenario": "Log a workout and see calories on dashboard",
+        "tester_role": "Jase Karl (member)",
+        "date_executed": "2026-05-16",
+        "expected": "Scenario UAT-SB-003 succeeds.",
+        "actual": "Workout logging in pytest; UI Workouts page smoke in browser.",
+        "pass_fail": "Pass",
+        "remarks": "Synced from docs/testing/results-data/uat_execution_results.json"
+      },
+      {
+        "uat_id": "UAT-SB-004",
+        "scenario": "Set a daily step goal and view progress",
+        "tester_role": "Christel (member)",
+        "date_executed": "2026-05-16",
+        "expected": "Scenario UAT-SB-004 succeeds.",
+        "actual": "Goal creation in pytest; Goals page manual check.",
+        "pass_fail": "Pass",
+        "remarks": "Synced from docs/testing/results-data/uat_execution_results.json"
+      },
+      {
+        "uat_id": "UAT-SB-005",
+        "scenario": "Open analytics and change trend period",
+        "tester_role": "Sherwin (member)",
+        "date_executed": "2026-05-16",
+        "expected": "Scenario UAT-SB-005 succeeds.",
+        "actual": "Demo user trends API returns 7 points; Analytics UI smoke.",
+        "pass_fail": "Pass",
+        "remarks": "Synced from docs/testing/results-data/uat_execution_results.json"
+      },
+      {
+        "uat_id": "UAT-SB-006",
+        "scenario": "Admin views platform stats; member cannot",
+        "tester_role": "Christel (admin)",
+        "date_executed": "2026-05-16",
+        "expected": "Scenario UAT-SB-006 succeeds.",
+        "actual": "Admin stats in pytest; member blocked from admin UI.",
+        "pass_fail": "Pass",
+        "remarks": "Synced from docs/testing/results-data/uat_execution_results.json"
+      },
+      {
+        "uat_id": "UAT-SB-007",
+        "scenario": "Guest/member blocked from admin routes and APIs",
+        "tester_role": "Christel + Sherwin",
+        "date_executed": "2026-05-16",
+        "expected": "Scenario UAT-SB-007 succeeds.",
+        "actual": "401 on unauthenticated admin stats; admin route guard in browser.",
+        "pass_fail": "Pass",
+        "remarks": "Synced from docs/testing/results-data/uat_execution_results.json"
+      }
+    ]
+  },
+  "section_12_uat_defects": {
+    "title": "12. UAT defects",
+    "instruction": "Reference Doc 7.",
+    "columns": [
+      "Defect ID",
+      "Related UAT ID",
+      "Description",
+      "Severity",
+      "Status"
+    ],
+    "rows": []
+  },
+  "section_13_feedback": {
+    "title": "13. Feedback",
+    "columns": [
+      "User / role",
+      "Feedback",
+      "Recommended action",
+      "Status"
+    ],
+    "rows": [
+      {
+        "user_role": "Member tester",
+        "feedback": "",
+        "recommended_action": "",
+        "status": ""
+      }
+    ]
+  },
+  "section_14_signoff": {
+    "title": "14. Sign-off",
+    "statement": "Testers confirm scenarios executed as described.",
+    "signatures": [
+      {
+        "role": "Member UAT tester",
+        "name_print": "________________",
+        "signature": "________________",
+        "date": "________"
+      },
+      {
+        "role": "Test lead",
+        "name_print": "Christel",
+        "signature": "________________",
+        "date": "________"
+      }
+    ]
+  }
+}

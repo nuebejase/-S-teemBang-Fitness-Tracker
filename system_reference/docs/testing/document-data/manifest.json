@@ -1,0 +1,20 @@
+{
+  "project": "FrinStore",
+  "group": "Group 6",
+  "compiled_date": "2026-05-14",
+  "sync_script": "python docs/testing/scripts/sync_results_to_document_data.py — merges results-data into document-data JSON",
+  "generated_office_documents": "Run: python docs/testing/document-data/generate_documents.py — outputs under docs/testing/documents/",
+  "results_capture": "docs/testing/results-data/ — execution outcomes and evidence paths (see results-data/manifest.json)",
+  "source_notes": "Built from docs/Project.json, docs/testing/testing-data/ and docs/testing/requirements-data/, and README run instructions.",
+  "suggested_zip_naming": "Use course format e.g. Group6_FrinStore_DocN_<Name>.pdf per WebApp_Testing_Documents_Requirements_Prefinal.pdf",
+  "documents": [
+    {"order": 1, "file": "01_test_plan.json", "deliverable": "Test Plan", "course_doc": "Doc 1"},
+    {"order": 2, "file": "02_test_cases_document.json", "deliverable": "Test Cases Document", "course_doc": "Doc 2"},
+    {"order": 3, "file": "03_system_test_report.json", "deliverable": "System Test Report", "course_doc": "Doc 5"},
+    {"order": 4, "file": "04_uat_plan_and_report.json", "deliverable": "UAT Plan & Report", "course_doc": "Doc 6"},
+    {"order": 5, "file": "05_defect_bug_report_log.json", "deliverable": "Defect / Bug Report Log", "course_doc": "Doc 7"},
+    {"order": 6, "file": "06_regression_test_report.json", "deliverable": "Regression Test Report", "course_doc": "Doc 8"},
+    {"order": 7, "file": "07_test_summary_report.json", "deliverable": "Test Summary Report", "course_doc": "Doc 9"}
+  ],
+  "not_included_by_user_request": ["Unit Test Report (Doc 3)", "Integration Test Report (Doc 4)"]
+}

@@ -1,0 +1,68 @@
+(S)TeemBang — local setup and usage
+====================================
+
+Overview
+--------
+(S)TeemBang is a fitness tracking web app: Vue 3 + Vite frontend (`steambang_frontend`) and FastAPI + SQLite backend (`steambang_backend`). The API is prefixed with `/api`.
+
+Prerequisites
+-------------
+- Node.js 18+
+- Python 3.12+ recommended
+
+1) Backend (API)
+----------------
+  cd steambang_backend
+  python -m venv .venv
+  .venv\Scripts\activate
+  pip install -r requirements.txt
+  python -m uvicorn app.main:app --reload --host 127.0.0.1 --port 8000
+
+On first startup the app creates `steambang.db` and seeds:
+- Admin: admin@steambang.com / admin123
+- Demo member: demo@steambang.com / demo1234 (14 days sample activity + goals)
+
+Health: http://127.0.0.1:8000/api/health
+
+2) Frontend
+-----------
+  cd steambang_frontend
+  npm install
+  npm run dev
+
+Open http://localhost:5173 (Vite proxies `/api` to port 8000).
+
+3) Try the flows
+----------------
+- Register or sign in as demo user
+- Dashboard: sync steps, view stats and streak
+- Log Workout: category, duration, auto calories
+- Goals: daily/weekly/monthly targets
+- Analytics: 7/14/30-day trend charts
+- Notifications: reminders and mark-read
+- Profile: height, weight, step target
+- Admin dashboard: platform stats
+
+4) Tests
+--------
+  cd steambang_backend
+  pip install -r requirements-dev.txt
+  .venv\Scripts\python.exe -m pytest tests -v
+
+From frontend: npm run test:api
+
+5) Testing documentation (docs/testing/)
+----------------------------------------
+Mirrors the course testing layout under system_reference/docs/:
+
+  docs/testing/document-data/   — JSON sources for Docs 1,2,5,6,7,8,9
+  docs/testing/documents/       — generated .docx / .xlsx (Group4_STeemBang_*)
+  docs/testing/results-data/    — execution results and evidence
+  docs/testing/requirements-data/
+  docs/resources/               — course PDF/DOCX templates
+
+Sync pytest + manual results into JSON, then regenerate Office files:
+
+  steambang_backend\.venv\Scripts\python.exe docs\testing\scripts\sync_results_to_document_data.py
+  steambang_backend\.venv\Scripts\pip.exe install python-docx openpyxl
+  steambang_backend\.venv\Scripts\python.exe docs\testing\document-data\generate_documents.py

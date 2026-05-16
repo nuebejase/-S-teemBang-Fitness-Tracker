@@ -1,0 +1,34 @@
+{
+  "schemaVersion": "1.0",
+  "documentType": "project-metadata",
+  "lastUpdated": "2026-05-15",
+  "project": {
+    "title": "(S)TeemBang",
+    "subtitle": "Fitness Tracking Application",
+    "group": "Group 4",
+    "members": ["APAS, Christel Grace", "Labe, Sherwin", "Tuazon, John Rae", "Zerrudo, Jase Karl"],
+    "problemStatement": "Many fitness apps suffer from feature overload and weak analytics. Users need a secure, simple platform to track activity, set goals, and visualize progress.",
+    "scope": {
+      "included": [
+        "JWT authentication",
+        "Activity and workout logging",
+        "Step sync (pedometer/manual)",
+        "Daily/weekly/monthly goals",
+        "Dashboard analytics and trends",
+        "Profile and notifications"
+      ],
+      "excluded": ["Wearable API integration", "AI coaching", "Nutrition engine", "Payments", "Social sharing"]
+    }
+  },
+  "repository": {
+    "layout": "monorepo",
+    "packages": [
+      { "name": "steambang_frontend", "path": "steambang_frontend" },
+      { "name": "steambang_backend", "path": "steambang_backend" }
+    ]
+  },
+  "techStack": {
+    "frontend": "Vue 3, Vite, Pinia, Tailwind CSS",
+    "backend": "FastAPI, SQLAlchemy, SQLite, JWT"
+  }
+}

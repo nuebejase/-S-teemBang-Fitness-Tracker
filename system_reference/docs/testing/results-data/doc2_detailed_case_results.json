@@ -1,0 +1,139 @@
+{
+  "description": "Detailed case results; keys aligned to document-data sheet_b.",
+  "rows": [
+    {
+      "test_case_id": "FSR-005",
+      "actual_result": "Layout smoke OK at narrow width; long-string checkout not re-run.",
+      "pass_fail": "Pass",
+      "tester_name": "IDE browser smoke (Cursor)",
+      "date_executed": "2026-05-14"
+    },
+    {
+      "test_case_id": "FSR-001",
+      "actual_result": "Register returns token; customer role in /me.",
+      "pass_fail": "Pass",
+      "tester_name": "pytest (frinstore_backend/tests)",
+      "date_executed": "2026-05-13"
+    },
+    {
+      "test_case_id": "FSR-002",
+      "actual_result": "Duplicate email returns 400.",
+      "pass_fail": "Pass",
+      "tester_name": "pytest (frinstore_backend/tests)",
+      "date_executed": "2026-05-13"
+    },
+    {
+      "test_case_id": "FSR-003",
+      "actual_result": "Login returns JWT; /me matches email.",
+      "pass_fail": "Pass",
+      "tester_name": "pytest (frinstore_backend/tests)",
+      "date_executed": "2026-05-13"
+    },
+    {
+      "test_case_id": "FSR-004",
+      "actual_result": "Invalid credentials -> 401.",
+      "pass_fail": "Pass",
+      "tester_name": "pytest (frinstore_backend/tests)",
+      "date_executed": "2026-05-13"
+    },
+    {
+      "test_case_id": "FSA-001",
+      "actual_result": "Products page lists API-backed catalog.",
+      "pass_fail": "Pass",
+      "tester_name": "IDE browser smoke (Cursor)",
+      "date_executed": "2026-05-14"
+    },
+    {
+      "test_case_id": "FSA-002",
+      "actual_result": "Product detail route available from listing (manual spot-check).",
+      "pass_fail": "Pass",
+      "tester_name": "IDE browser smoke (Cursor)",
+      "date_executed": "2026-05-14"
+    },
+    {
+      "test_case_id": "FSA-003",
+      "actual_result": "Flavor search \"Vanilla\" narrows/highlight results.",
+      "pass_fail": "Pass",
+      "tester_name": "IDE browser smoke (Cursor)",
+      "date_executed": "2026-05-14"
+    },
+    {
+      "test_case_id": "FSG-001",
+      "actual_result": "Add to cart from listing.",
+      "pass_fail": "Pass",
+      "tester_name": "IDE browser smoke (Cursor)",
+      "date_executed": "2026-05-14"
+    },
+    {
+      "test_case_id": "FSG-002",
+      "actual_result": "Cart persists across client navigation.",
+      "pass_fail": "Pass",
+      "tester_name": "IDE browser smoke (Cursor)",
+      "date_executed": "2026-05-14"
+    },
+    {
+      "test_case_id": "FCO-001",
+      "actual_result": "Checkout gated: redirect to login when logged out.",
+      "pass_fail": "Pass",
+      "tester_name": "IDE browser smoke (Cursor)",
+      "date_executed": "2026-05-14"
+    },
+    {
+      "test_case_id": "FCO-002",
+      "actual_result": "Happy-path order created with FS- id (pytest).",
+      "pass_fail": "Pass",
+      "tester_name": "pytest (frinstore_backend/tests)",
+      "date_executed": "2026-05-13"
+    },
+    {
+      "test_case_id": "FCO-003",
+      "actual_result": "Order history scoped to customer (pytest).",
+      "pass_fail": "Pass",
+      "tester_name": "pytest (frinstore_backend/tests)",
+      "date_executed": "2026-05-13"
+    },
+    {
+      "test_case_id": "FAD-001",
+      "actual_result": "Admin creates product (pytest).",
+      "pass_fail": "Pass",
+      "tester_name": "pytest (frinstore_backend/tests)",
+      "date_executed": "2026-05-13"
+    },
+    {
+      "test_case_id": "FAD-002",
+      "actual_result": "Admin PATCH + DELETE product (pytest).",
+      "pass_fail": "Pass",
+      "tester_name": "pytest (frinstore_backend/tests)",
+      "date_executed": "2026-05-13"
+    },
+    {
+      "test_case_id": "FAO-001",
+      "actual_result": "Admin updates order status (pytest).",
+      "pass_fail": "Pass",
+      "tester_name": "pytest (frinstore_backend/tests)",
+      "date_executed": "2026-05-13"
+    },
+    {
+      "test_case_id": "FSC-001",
+      "actual_result": "Router blocks /admin for customer session (manual + aligns with API RBAC).",
+      "pass_fail": "Pass",
+      "tester_name": "IDE browser smoke (Cursor)",
+      "date_executed": "2026-05-14"
+    },
+    {
+      "test_case_id": "FSC-003",
+      "actual_result": "Admin cannot POST /orders as customer checkout (403).",
+      "pass_fail": "Pass",
+      "tester_name": "pytest (frinstore_backend/tests)",
+      "date_executed": "2026-05-13"
+    },
+    {
+      "test_case_id": "FGN-001",
+      "actual_result": "Health endpoint OK.",
+      "pass_fail": "Pass",
+      "tester_name": "IDE browser smoke (Cursor)",
+      "date_executed": "2026-05-14"
+    }
+  ],
+  "last_sync": "2026-05-14"
+}

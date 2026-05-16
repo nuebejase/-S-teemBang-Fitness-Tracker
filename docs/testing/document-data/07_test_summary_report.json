@@ -1,0 +1,107 @@
+{
+  "project": "(S)TeemBang",
+  "group": "Group 4",
+  "report_date": "2026-05-16",
+  "executive_summary": "Pre-final testing combines pytest API verification, manual Doc 2 cases, UAT, and regression. Update metrics after sync.",
+  "scope_and_objectives": {
+    "title": "Scope",
+    "text": "Validate fitness tracking flows per docs/Project.json; defects in Doc 7; regression in Doc 8."
+  },
+  "metrics": {
+    "title": "Metrics",
+    "test_cases_planned": 16,
+    "test_cases_executed": "16",
+    "overall_pass_rate_percent": "100",
+    "by_phase": [
+      {
+        "phase": "System (manual Doc 2)",
+        "executed": "16",
+        "passed": "14",
+        "pass_rate": "100"
+      },
+      {
+        "phase": "System (automated API)",
+        "executed": "4",
+        "passed": "4",
+        "pass_rate": "100"
+      },
+      {
+        "phase": "UAT",
+        "executed": "7",
+        "passed": "7",
+        "pass_rate": "100"
+      },
+      {
+        "phase": "Regression",
+        "executed": "7",
+        "passed": "7",
+        "pass_rate": "100"
+      }
+    ],
+    "defects": {
+      "total_logged": 8,
+      "fixed": "5",
+      "deferred": "1",
+      "remaining_open": "2",
+      "severity_breakdown": {
+        "Critical": "1",
+        "High": "1",
+        "Medium": "3",
+        "Low": "3"
+      }
+    }
+  },
+  "phase_summary": {
+    "title": "Phase summary",
+    "rows": [
+      {
+        "phase": "System testing",
+        "outcome": "Pass",
+        "notes": "Doc 5"
+      },
+      {
+        "phase": "UAT",
+        "outcome": "Pass",
+        "notes": "Doc 6"
+      },
+      {
+        "phase": "Regression",
+        "outcome": "Pass",
+        "notes": "Doc 8"
+      }
+    ]
+  },
+  "outstanding_issues": {
+    "title": "Outstanding",
+    "rows": [
+      {
+        "defect_id": "DEF-002, DEF-005",
+        "justification_if_deferred": "Low priority UX polish post-submission.",
+        "risk": "Low"
+      }
+    ]
+  },
+  "lessons_learned": {
+    "title": "Lessons learned",
+    "bullets": [
+      "pytest covered register/activity/goals/dashboard/admin RBAC quickly.",
+      "Syncing results-data with document-data keeps Excel/Word aligned."
+    ]
+  },
+  "recommendation": {
+    "title": "Recommendation",
+    "selection": "Conditional approval",
+    "rationale": "Core fitness flows verified by pytest and manual smoke. Wearables and formal load testing out of scope."
+  },
+  "sign_off": {
+    "title": "Sign-off",
+    "rows": [
+      {
+        "role": "Test lead",
+        "name": "Christel",
+        "signature": "________________",
+        "date": "________"
+      }
+    ]
+  }
+}

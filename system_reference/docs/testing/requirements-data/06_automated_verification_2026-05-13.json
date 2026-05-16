@@ -1,0 +1,20 @@
+{
+  "when": "2026-05-13",
+  "purpose": "Evidence for System Test / Test Summary: what was executed against this repo today.",
+  "backend": {
+    "command": "cd frinstore_backend && .venv\\Scripts\\python.exe -m pytest tests -v --tb=short",
+    "result": "7 passed",
+    "tests_file": "frinstore_backend/tests/test_api.py",
+    "notes": "FastAPI TestClient exercises health, seeded catalog size, register/login/me, checkout order creation, role guards, admin product CRUD + order status, invalid login."
+  },
+  "frontend": {
+    "command": "cd frinstore_frontend && npm run build",
+    "result": "Succeeded (vue-tsc -b && vite build)",
+    "notes": "Production build completed; plugin timing warnings only."
+  },
+  "mapping_to_course_docs": {
+    "doc5_system_test_report": "Map pytest cases + manual browser checks to functional requirements in 04_frinstore_project_context.json; add at least two non-functional areas (e.g. security/RBAC + usability/responsive).",
+    "doc3_unit_test_report": "Course still requires this file in the ZIP; capture pytest -v screenshot and summarize counts there.",
+    "doc4_integration_test_report": "Course still requires this file; describe SPA↔API integration scenarios (auth header, checkout, admin flows) even if partially covered by pytest."
+  }
+}

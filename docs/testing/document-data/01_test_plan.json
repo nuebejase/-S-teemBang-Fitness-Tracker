@@ -1,0 +1,277 @@
+{
+  "compiled_into": "docs/testing/document-data",
+  "standard": "IEEE 829-1998",
+  "project": {
+    "name": "(S)TeemBang",
+    "description": "Fitness tracking: Vue 3 SPA (steambang_frontend) + FastAPI (steambang_backend), SQLite, JWT, activity/goals/analytics.",
+    "group": "Group 4"
+  },
+  "sections": {
+    "test_plan_identifier": {
+      "title": "Test Plan Identifier",
+      "unique_id": "G4-STEAMBANG-TP-2026-001",
+      "level": "Master / System test plan (pre-final)",
+      "version": "1.0",
+      "date": "2026-05-16",
+      "authors": "Christel; Sherwin; John Rae; Jase Karl",
+      "revision_history": [
+        {
+          "version": "1.0",
+          "date": "2026-05-16",
+          "change": "Initial test plan for (S)TeemBang."
+        }
+      ]
+    },
+    "introduction": {
+      "title": "Introduction",
+      "purpose": "Define how Group 4 verifies (S)TeemBang meets fitness-tracking requirements before submission.",
+      "references": [
+        "docs/Project.json",
+        "docs/instructions.txt",
+        "docs/resources/WebApp_Testing_Documents_Requirements_Prefinal.pdf",
+        "FastAPI OpenAPI at /docs when API is running"
+      ]
+    },
+    "scope": {
+      "title": "Scope",
+      "in_scope": [
+        "JWT registration, login, member session",
+        "Activity and workout logging, step sync",
+        "Goals (daily/weekly/monthly)",
+        "Dashboard and analytics trends",
+        "Profile and notifications",
+        "Admin platform stats and RBAC"
+      ],
+      "out_of_scope_for_this_test_cycle": [
+        "Wearable API integration",
+        "AI coaching",
+        "Nutrition engine",
+        "Payments",
+        "Formal load testing"
+      ]
+    },
+    "test_items": {
+      "title": "Test Items",
+      "items": [
+        {
+          "name": "steambang_frontend",
+          "version": "Vite build",
+          "role": "Member + admin UI"
+        },
+        {
+          "name": "steambang_backend",
+          "version": "FastAPI app/",
+          "role": "REST /api/*"
+        },
+        {
+          "name": "SQLite",
+          "path": "steambang_backend/steambang.db",
+          "role": "Persistence"
+        },
+        {
+          "name": "Automated tests",
+          "path": "steambang_backend/tests/test_api.py",
+          "role": "API smoke"
+        }
+      ]
+    },
+    "features_to_be_tested": {
+      "title": "Features To Be Tested",
+      "rows": [
+        {
+          "id": "F-AUTH",
+          "feature": "Register, login, /me",
+          "risk": "H",
+          "linked_cases": "SBR-001, SBR-003"
+        },
+        {
+          "id": "F-ACT",
+          "feature": "Workouts and step sync",
+          "risk": "H",
+          "linked_cases": "SBA-001, SBD-002"
+        },
+        {
+          "id": "F-GOAL",
+          "feature": "Goals CRUD",
+          "risk": "M",
+          "linked_cases": "SBG-001"
+        },
+        {
+          "id": "F-AN",
+          "feature": "Dashboard and trends",
+          "risk": "H",
+          "linked_cases": "SBD-001, SBAn-001"
+        },
+        {
+          "id": "F-ADM",
+          "feature": "Admin stats",
+          "risk": "H",
+          "linked_cases": "SBAd-001, SBS-003"
+        },
+        {
+          "id": "F-SEC",
+          "feature": "RBAC",
+          "risk": "H",
+          "linked_cases": "SBS-001, SBS-003"
+        }
+      ]
+    },
+    "features_not_to_be_tested": {
+      "title": "Features Not To Be Tested",
+      "rows": [
+        {
+          "feature": "Wearable sync",
+          "reason": "Excluded in Project.json scope."
+        },
+        {
+          "feature": "Push notifications to device OS",
+          "reason": "In-app only in this build."
+        }
+      ]
+    },
+    "approach": {
+      "title": "Approach / Strategy",
+      "methods": [
+        "pytest with FastAPI TestClient",
+        "Manual system cases in Doc 2",
+        "UAT scenarios in Doc 6"
+      ],
+      "tools": [
+        "pytest",
+        "npm run dev / build",
+        "Browser devtools"
+      ],
+      "metrics": [
+        "Pass rate by module",
+        "Defect severity counts"
+      ]
+    },
+    "item_pass_fail_criteria": {
+      "title": "Item Pass/Fail Criteria",
+      "criteria": [
+        "Pass when UI/API matches expected result.",
+        "Critical auth, activity logging, or admin RBAC failures block sign-off."
+      ]
+    },
+    "suspension_and_resumption": {
+      "title": "Suspension Criteria and Resumption Requirements",
+      "suspend_if": [
+        "API unreachable",
+        "DB corrupt",
+        "Blocking defect on login"
+      ],
+      "resume_after": [
+        "Environment restored",
+        "Health + login smoke pass"
+      ]
+    },
+    "test_deliverables": {
+      "title": "Test Deliverables",
+      "list": [
+        "Doc 1 — 01_test_plan.json",
+        "Doc 2 — 02_test_cases_document.json",
+        "Doc 5 — 03_system_test_report.json",
+        "Doc 6 — 04_uat_plan_and_report.json",
+        "Doc 7 — 05_defect_bug_report_log.json",
+        "Doc 8 — 06_regression_test_report.json",
+        "Doc 9 — 07_test_summary_report.json"
+      ]
+    },
+    "test_tasks_and_schedule": {
+      "title": "Test Tasks and Schedule",
+      "tasks": [
+        {
+          "task": "Finalize test plan",
+          "owner": "Christel",
+          "due": "2026-05-16"
+        },
+        {
+          "task": "Execute Doc 2 + pytest",
+          "owner": "All members",
+          "due": "2026-05-16"
+        },
+        {
+          "task": "UAT session",
+          "owner": "Sherwin",
+          "due": "2026-05-16"
+        },
+        {
+          "task": "Regression + summary",
+          "owner": "Jase Karl",
+          "due": "2026-05-16"
+        }
+      ]
+    },
+    "environmental_needs": {
+      "title": "Environmental Needs",
+      "hardware_os": "Windows 10/11, 8 GB+ RAM",
+      "software": "Node.js 18+, Python 3.12+, Chrome/Edge",
+      "network": "localhost; Vite proxies /api to 127.0.0.1:8000",
+      "test_data": "admin@steambang.com / admin123; demo@steambang.com / demo1234"
+    },
+    "responsibilities": {
+      "title": "Responsibilities",
+      "assignments": [
+        {
+          "role": "Test lead",
+          "person": "Christel",
+          "duty": "Plan and summary"
+        },
+        {
+          "role": "API verification",
+          "person": "[Assign]",
+          "duty": "pytest runs"
+        },
+        {
+          "role": "Manual execution",
+          "person": "[Assign]",
+          "duty": "Doc 2 log"
+        },
+        {
+          "role": "UAT coordination",
+          "person": "Jase Karl",
+          "duty": "UAT sign-off"
+        },
+        {
+          "role": "Defect triage",
+          "person": "[Assign]",
+          "duty": "Doc 7"
+        }
+      ]
+    },
+    "staffing_and_training": {
+      "title": "Staffing and Training Needs",
+      "text": "UAT testers receive URLs, demo credentials, and scenario scripts; no destructive admin actions without DB reset plan."
+    },
+    "risks_and_contingencies": {
+      "title": "Risks and Contingencies",
+      "rows": [
+        {
+          "risk": "Single-machine demo",
+          "mitigation": "Capture pytest log and screenshots."
+        },
+        {
+          "risk": "SQLite lock under parallel runs",
+          "mitigation": "Serialize pytest; use test DB from conftest."
+        }
+      ]
+    },
+    "approvals": {
+      "title": "Approvals",
+      "sign_off_rows": [
+        {
+          "role": "Test Lead",
+          "name": "________________",
+          "signature": "________________",
+          "date": "________"
+        },
+        {
+          "role": "Instructor",
+          "name": "________________",
+          "signature": "________________",
+          "date": "________"
+        }
+      ]
+    }
+  }
+}

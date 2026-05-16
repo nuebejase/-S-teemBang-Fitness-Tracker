@@ -1,0 +1,48 @@
+{
+  "description": "Office deliverable status",
+  "generated_from": "../document-data/generate_documents.py",
+  "artifacts": [
+    {
+      "path": "../documents/Group4_STeemBang_Doc1_TestPlan.docx",
+      "json_source": "../document-data/01_test_plan.json",
+      "results_status": "synced",
+      "notes": "JSON synced 2026-05-16; run generate_documents.py to refresh Office files."
+    },
+    {
+      "path": "../documents/Group4_STeemBang_Doc2_TestCases.xlsx",
+      "json_source": "../document-data/02_test_cases_document.json",
+      "results_status": "synced",
+      "notes": "JSON synced 2026-05-16; run generate_documents.py to refresh Office files."
+    },
+    {
+      "path": "../documents/Group4_STeemBang_Doc5_SystemTestReport.docx",
+      "json_source": "../document-data/03_system_test_report.json",
+      "results_status": "synced",
+      "notes": "JSON synced 2026-05-16; run generate_documents.py to refresh Office files."
+    },
+    {
+      "path": "../documents/Group4_STeemBang_Doc6_UATPlanReport.docx",
+      "json_source": "../document-data/04_uat_plan_and_report.json",
+      "results_status": "synced",
+      "notes": "JSON synced 2026-05-16; run generate_documents.py to refresh Office files."
+    },
+    {
+      "path": "../documents/Group4_STeemBang_Doc7_DefectLog.xlsx",
+      "json_source": "../document-data/05_defect_bug_report_log.json",
+      "results_status": "synced",
+      "notes": "JSON synced 2026-05-16; run generate_documents.py to refresh Office files."
+    },
+    {
+      "path": "../documents/Group4_STeemBang_Doc8_RegressionTestReport.docx",
+      "json_source": "../document-data/06_regression_test_report.json",
+      "results_status": "synced",
+      "notes": "JSON synced 2026-05-16; run generate_documents.py to refresh Office files."
+    },
+    {
+      "path": "../documents/Group4_STeemBang_Doc9_TestSummaryReport.docx",
+      "json_source": "../document-data/07_test_summary_report.json",
+      "results_status": "synced",
+      "notes": "JSON synced 2026-05-16; run generate_documents.py to refresh Office files."
+    }
+  ]
+}

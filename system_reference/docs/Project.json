@@ -1,0 +1,328 @@
+{
+  "schemaVersion": "1.0",
+  "documentType": "project-metadata",
+  "lastUpdated": "2026-05-11",
+
+  "project": {
+    "title": "FrinStore",
+    "subtitle": "Local Ice Cream Online Marketplace Platform",
+    "scenario": "Online Marketplace Platform",
+    "group": "Group 6",
+    "elevatorPitch": "A web platform where customers browse FrinStore ice cream products online, place orders with checkout and payments, track orders, and where staff manage inventory and sales through an admin dashboard.",
+    "problemStatements": [
+      "Customers cannot conveniently browse ice cream products, flavors, and availability without visiting the physical store.",
+      "Manual ordering through chat or phone causes order errors, delays, and poor tracking of customer purchases.",
+      "The store has no centralized system for managing inventory, orders, and sales reporting."
+    ],
+    "stakeholders": [
+      "Local FrinStore (ice cream shop) customers",
+      "Store staff",
+      "Store administrators"
+    ],
+    "sdlc": {
+      "model": "Agile",
+      "rationale": [
+        "Continuous improvement from feedback",
+        "Faster delivery of working features",
+        "Flexibility when requirements change",
+        "Frequent testing reduces large late failures"
+      ],
+      "phases": [
+        "Planning",
+        "Requirements",
+        "Design",
+        "Development",
+        "Testing",
+        "Deployment",
+        "Maintenance"
+      ]
+    },
+    "scope": {
+      "included": [
+        "Online product catalog browsing",
+        "Customer registration and login",
+        "Shopping cart and checkout",
+        "Online payment integration (e.g., GCash, card)",
+        "Order tracking and notifications",
+        "Admin dashboard for inventory and sales"
+      ],
+      "excluded": [
+        "Third-party delivery logistics integration",
+        "AI recommendation engine",
+        "Franchise or multi-branch management",
+        "Offline POS integration"
+      ]
+    },
+    "functionalRequirements": [
+      "User registration and login authentication",
+      "Product browsing and search by flavor, price, or category",
+      "Add to cart and checkout",
+      "Online payment integration",
+      "Order tracking and order history",
+      "Admin inventory and product management",
+      "Sales reporting",
+      "Customer notifications (confirmation, status updates)"
+    ],
+    "nonFunctionalRequirements": [
+      "Initial load within ~3 seconds under normal traffic",
+      "Support for at least 500 concurrent users (target)",
+      "Encryption for customer and payment data",
+      "High availability target (99% uptime)",
+      "Mobile-responsive interface",
+      "Secure authentication and role-based access control",
+      "Database backups at least every 24 hours"
+    ]
+  },
+
+  "team": {
+    "members": [
+      {
+        "name": "Omadley",
+        "role": "Team Leader"
+      },
+      {
+        "name": "Moleta",
+        "role": "Team Member"
+      },
+      {
+        "name": "Butad",
+        "role": "Team Member"
+      },
+      {
+        "name": "Tamera",
+        "role": "Team Member"
+      },
+      {
+        "name": "Ancog",
+        "role": "Team Member"
+      }
+    ],
+    "notes": "Member names follow the course document (Group 6). Add full names and student IDs here if your instructor requires them."
+  },
+
+  "repository": {
+    "layout": "monorepo",
+    "packages": [
+      {
+        "name": "frinstore_frontend",
+        "path": "frinstore_frontend",
+        "description": "Vue 3 single-page application (customer storefront + admin routes)."
+      },
+      {
+        "name": "frinstore_backend",
+        "path": "frinstore_backend",
+        "description": "Python environment scaffold for the REST API service (implementation per design phase)."
+      },
+      {
+        "name": "react_prototype",
+        "path": "react_prototype",
+        "description": "Optional early UI prototype (not the primary production frontend)."
+      }
+    ]
+  },
+
+  "techStack": {
+    "summary": "Vue 3 SPA with Pinia talks to a FastAPI + SQLite backend (JWT). Payment methods are recorded only — no live gateway in this build.",
+    "frontend": {
+      "runtime": "TypeScript",
+      "framework": "Vue 3 (Composition API)",
+      "buildTool": "Vite",
+      "routing": "Vue Router 4",
+      "stateManagement": "Pinia",
+      "styling": "Tailwind CSS 3",
+      "componentPrimitives": "@headlessui/vue",
+      "icons": ["@heroicons/vue", "lucide-vue-next"],
+      "utilities": ["@vueuse/core", "clsx", "tailwind-merge", "class-variance-authority"],
+      "feedback": "sonner (toast notifications)"
+    },
+    "backend": {
+      "language": "Python 3",
+      "pattern": "REST API + layered application core",
+      "recommendedFramework": "FastAPI",
+      "recommendedOrm": "SQLAlchemy 2.x",
+      "database": {
+        "development": "SQLite (simple local dev)",
+        "production": "PostgreSQL or MySQL (managed cloud instance)"
+      },
+      "auth": "JWT access tokens (Bearer) + password hashing (e.g., bcrypt or argon2)",
+      "payments": "Provider SDK or hosted checkout (align with GCash/card requirements from SRS)",
+      "observability": "Structured logging; optional OpenAPI docs auto-generated from FastAPI"
+    },
+    "devOps": {
+      "versionControl": "Git",
+      "hostingStrategy": "Cloud hosting for API + database; static hosting or CDN for frontend build artifacts",
+      "ciSuggestion": "Lint + typecheck + unit tests on pull requests"
+    }
+  },
+
+  "backend": {
+    "architecture": {
+      "style": "Layered / modular monolith",
+      "communication": "HTTPS JSON REST between browser and API",
+      "principles": [
+        "Thin controllers (routes) delegating to services",
+        "Validated request/response models (schemas/DTOs)",
+        "Repository or data-access layer isolating SQL",
+        "Centralized configuration and secrets (environment variables)"
+      ],
+      "highLevelDiagram": "Client (Vue SPA) → API Gateway / Reverse Proxy → Python API → Relational DB; Payment provider called server-side only."
+    },
+    "structure": {
+      "recommendedRoot": "frinstore_backend/",
+      "directories": [
+        {
+          "path": "app/",
+          "purpose": "Application package root."
+        },
+        {
+          "path": "app/main.py",
+          "purpose": "App factory / FastAPI instance wiring."
+        },
+        {
+          "path": "app/api/",
+          "purpose": "HTTP routers grouped by domain (auth, products, orders, admin)."
+        },
+        {
+          "path": "app/core/",
+          "purpose": "Configuration, security helpers, dependencies."
+        },
+        {
+          "path": "app/models/",
+          "purpose": "ORM models / persistence entities."
+        },
+        {
+          "path": "app/schemas/",
+          "purpose": "Pydantic models for API input/output."
+        },
+        {
+          "path": "app/services/",
+          "purpose": "Business logic (checkout, inventory rules, reporting)."
+        },
+        {
+          "path": "tests/",
+          "purpose": "Unit and integration tests."
+        },
+        {
+          "path": "requirements.txt",
+          "purpose": "Pinned Python dependencies."
+        }
+      ],
+      "domainModules": [
+        "Authentication & authorization (roles: customer, admin)",
+        "Catalog (products, categories, pricing, availability)",
+        "Cart & checkout sessions",
+        "Orders & order status workflow",
+        "Payments (webhooks / confirmation)",
+        "Admin inventory and basic sales summaries",
+        "Notifications (email or SMS adapter — can start as queued jobs or simple transactional sends)"
+      ]
+    },
+    "implementationStatus": {
+      "note": "Implemented: FastAPI app under frinstore_backend/app with SQLite (frinstore.db), JWT auth, product CRUD, customer checkout orders (stock decrement), and admin order status updates. Seed creates catalog + admin@frinstore.com / admin123. Run: uvicorn app.main:app --reload from frinstore_backend.",
+      "livePaymentGateway": "Excluded per project scope — payment method is stored for fulfillment only."
+    }
+  },
+
+  "frontend": {
+    "architecture": {
+      "style": "Single Page Application (SPA)",
+      "rendering": "Client-side rendering (CSR)",
+      "state": "Pinia store; JWT in localStorage; cart persisted locally; catalog and orders loaded from API.",
+      "navigation": "Declarative routes with navigation guards for authentication and roles",
+      "apiIntegration": "src/lib/api.ts calls FastAPI (/api/*) with Bearer token; checkout requires authenticated customer."
+    },
+    "structure": {
+      "root": "frinstore_frontend/",
+      "directories": [
+        {
+          "path": "src/main.ts",
+          "purpose": "App bootstrap: Vue app, Pinia, router."
+        },
+        {
+          "path": "src/App.vue",
+          "purpose": "Root component."
+        },
+        {
+          "path": "src/router/index.ts",
+          "purpose": "Route table and auth/role guards."
+        },
+        {
+          "path": "src/stores/appStore.ts",
+          "purpose": "Global application state (user, catalog, cart, orders)."
+        },
+        {
+          "path": "src/pages/",
+          "purpose": "Route-level views (Home, Products, Cart, Checkout, Orders, Login, Register, Profile, About)."
+        },
+        {
+          "path": "src/pages/admin/",
+          "purpose": "Admin views (dashboard, products, orders)."
+        },
+        {
+          "path": "src/components/",
+          "purpose": "Shared layout and UI building blocks."
+        },
+        {
+          "path": "src/components/ui/",
+          "purpose": "Reusable UI primitives (Button, Card, toast wrapper)."
+        },
+        {
+          "path": "src/lib/api.ts",
+          "purpose": "REST client + response mapping (snake_case API → frontend domain types)."
+        },
+        {
+          "path": "src/data/mockProducts.ts",
+          "purpose": "Legacy seed list (catalog now served from API; kept for reference)."
+        },
+        {
+          "path": "src/constants/storage.ts",
+          "purpose": "localStorage keys and client persistence helpers."
+        },
+        {
+          "path": "src/lib/utils.ts",
+          "purpose": "Class name merge helpers (cn pattern)."
+        },
+        {
+          "path": "src/styles/globals.css",
+          "purpose": "Global styles and Tailwind entry."
+        }
+      ],
+      "keyUserJourneys": [
+        "Browse catalog → product detail → add to cart → checkout → order confirmation",
+        "Register/login → profile and order history",
+        "Admin login → manage products and orders"
+      ]
+    }
+  },
+
+  "extensionsAndTechnologies": {
+    "editor": {
+      "vscode": {
+        "recommendedExtensions": [
+          {
+            "id": "Vue.volar",
+            "purpose": "Vue 3 language support (template type-checking, tooling)."
+          }
+        ]
+      }
+    },
+    "browserStandards": [
+      "ES modules",
+      "Responsive CSS (mobile-first)",
+      "Accessibility baseline via semantic HTML and Headless UI patterns"
+    ],
+    "standardsAndConventions": {
+      "api": "REST + JSON; plural nouns for resources; consistent error envelope",
+      "security": "HTTPS; HttpOnly cookies or Bearer tokens (team choice documented in SRS); never expose secret keys in frontend bundles",
+      "formatting": "Prettier/ESLint optional additions for team consistency"
+    }
+  },
+
+  "futureImprovements": [
+    "Delivery tracking integration",
+    "Loyalty rewards",
+    "AI-based recommendations",
+    "Dedicated mobile app",
+    "Multi-branch support"
+  ]
+}

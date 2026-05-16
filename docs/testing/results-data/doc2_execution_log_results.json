@@ -1,0 +1,159 @@
+{
+  "description": "Execution log synced from pytest + browser smoke.",
+  "columns": [
+    "Test Case ID",
+    "Pass/Fail",
+    "Test Execution Date",
+    "Responsible Developer",
+    "Responsible Tester",
+    "Comment",
+    "Additional Comments (other than QA team)"
+  ],
+  "rows": [
+    {
+      "test_case_id": "SBR-005",
+      "pass_fail": "Pass",
+      "test_execution_date": "2026-05-16",
+      "responsible_developer": "Sherwin",
+      "responsible_tester": "IDE browser smoke (Cursor)",
+      "comment": "[Verify UI] Long notes on profile or workout form do not overflow on narrow viewports.",
+      "additional_comments_non_qa": "Profile/workout forms OK at 390px; very long notes not re-tested."
+    },
+    {
+      "test_case_id": "SBR-007",
+      "pass_fail": "N/A",
+      "test_execution_date": "2026-05-16",
+      "responsible_developer": "John Rae",
+      "responsible_tester": "IDE browser smoke (Cursor)",
+      "comment": "Forgot-password / email recovery — not in scope; document as N/A.",
+      "additional_comments_non_qa": "Forgot-password not in scope."
+    },
+    {
+      "test_case_id": "SBR-009",
+      "pass_fail": "N/A",
+      "test_execution_date": "2026-05-16",
+      "responsible_developer": "John Rae",
+      "responsible_tester": "IDE browser smoke (Cursor)",
+      "comment": "Social login — not implemented; mark N/A.",
+      "additional_comments_non_qa": "Social login not implemented."
+    },
+    {
+      "test_case_id": "SBD-001",
+      "pass_fail": "Pass",
+      "test_execution_date": "2026-05-16",
+      "responsible_developer": "Christel",
+      "responsible_tester": "IDE browser smoke (Cursor)",
+      "comment": "Dashboard shows today steps, workouts, streak after login.",
+      "additional_comments_non_qa": "Dashboard loads with stats for demo user."
+    },
+    {
+      "test_case_id": "SBD-002",
+      "pass_fail": "Pass",
+      "test_execution_date": "2026-05-16",
+      "responsible_developer": "Christel",
+      "responsible_tester": "pytest (steambang_backend/tests)",
+      "comment": "Sync steps updates dashboard totals.",
+      "additional_comments_non_qa": "test_register_login_dashboard: steps sync 4500."
+    },
+    {
+      "test_case_id": "SBA-001",
+      "pass_fail": "Pass",
+      "test_execution_date": "2026-05-16",
+      "responsible_developer": "Sherwin",
+      "responsible_tester": "pytest (steambang_backend/tests)",
+      "comment": "Log workout creates activity with calories.",
+      "additional_comments_non_qa": "test_register_login_dashboard: workout 201, calories > 0."
+    },
+    {
+      "test_case_id": "SBA-002",
+      "pass_fail": "Pass",
+      "test_execution_date": "2026-05-16",
+      "responsible_developer": "Sherwin",
+      "responsible_tester": "pytest (steambang_backend/tests)",
+      "comment": "Workout duration drives calorie estimate.",
+      "additional_comments_non_qa": "Calories computed from duration in same test."
+    },
+    {
+      "test_case_id": "SBG-001",
+      "pass_fail": "Pass",
+      "test_execution_date": "2026-05-16",
+      "responsible_developer": "John Rae",
+      "responsible_tester": "pytest (steambang_backend/tests)",
+      "comment": "Create daily/weekly/monthly goal.",
+      "additional_comments_non_qa": "test_register_login_dashboard: daily steps goal 201."
+    },
+    {
+      "test_case_id": "SBAn-001",
+      "pass_fail": "Pass",
+      "test_execution_date": "2026-05-16",
+      "responsible_developer": "Jase Karl",
+      "responsible_tester": "pytest (steambang_backend/tests)",
+      "comment": "Analytics trends chart loads for 7/14/30 days.",
+      "additional_comments_non_qa": "test_demo_user_seeded: trends 7 points."
+    },
+    {
+      "test_case_id": "SBN-001",
+      "pass_fail": "Pass",
+      "test_execution_date": "2026-05-16",
+      "responsible_developer": "Jase Karl",
+      "responsible_tester": "IDE browser smoke (Cursor)",
+      "comment": "Notifications list loads; mark-read works.",
+      "additional_comments_non_qa": "Notifications page loads; mark-read spot-check."
+    },
+    {
+      "test_case_id": "SBP-001",
+      "pass_fail": "Pass",
+      "test_execution_date": "2026-05-16",
+      "responsible_developer": "Christel",
+      "responsible_tester": "IDE browser smoke (Cursor)",
+      "comment": "Profile height/weight/step target update persists.",
+      "additional_comments_non_qa": "Profile height/weight/target saved."
+    },
+    {
+      "test_case_id": "SBAd-001",
+      "pass_fail": "Pass",
+      "test_execution_date": "2026-05-16",
+      "responsible_developer": "Christel",
+      "responsible_tester": "pytest (steambang_backend/tests)",
+      "comment": "Admin dashboard stats require admin role.",
+      "additional_comments_non_qa": "test_admin_stats: total_users >= 2."
+    },
+    {
+      "test_case_id": "SBS-001",
+      "pass_fail": "Pass",
+      "test_execution_date": "2026-05-16",
+      "responsible_developer": "Sherwin",
+      "responsible_tester": "IDE browser smoke (Cursor)",
+      "comment": "Member cannot access admin UI routes.",
+      "additional_comments_non_qa": "Member session cannot open /admin dashboard route."
+    },
+    {
+      "test_case_id": "SBS-003",
+      "pass_fail": "Pass",
+      "test_execution_date": "2026-05-16",
+      "responsible_developer": "Christel",
+      "responsible_tester": "pytest (steambang_backend/tests)",
+      "comment": "Unauthenticated request to admin stats returns 401.",
+      "additional_comments_non_qa": "test_admin_stats: GET /api/admin/stats without token -> 401."
+    },
+    {
+      "test_case_id": "SBGen-001",
+      "pass_fail": "Pass",
+      "test_execution_date": "2026-05-16",
+      "responsible_developer": "Christel",
+      "responsible_tester": "pytest (steambang_backend/tests)",
+      "comment": "GET /api/health returns ok.",
+      "additional_comments_non_qa": "test_health: {\"status\":\"ok\"}."
+    },
+    {
+      "test_case_id": "SBGen-002",
+      "pass_fail": "Pass",
+      "test_execution_date": "2026-05-16",
+      "responsible_developer": "John Rae",
+      "responsible_tester": "IDE browser smoke (Cursor)",
+      "comment": "Responsive layout on dashboard and workouts at ~390px.",
+      "additional_comments_non_qa": "390px viewport: dashboard and workouts navigable."
+    }
+  ],
+  "last_sync": "2026-05-16"
+}

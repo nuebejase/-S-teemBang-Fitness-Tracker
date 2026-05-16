@@ -1,0 +1,50 @@
+{
+  "description": "Mirrors Doc9 after sync.",
+  "test_cases_planned": 19,
+  "test_cases_executed": "19",
+  "overall_pass_rate_percent": "100",
+  "by_phase": [
+    {
+      "phase": "System (manual Doc 2)",
+      "executed": "19",
+      "passed": "19",
+      "pass_rate": "100"
+    },
+    {
+      "phase": "System (automated API)",
+      "executed": "7",
+      "passed": "7",
+      "pass_rate": "100"
+    },
+    {
+      "phase": "UAT",
+      "executed": "7",
+      "passed": "7",
+      "pass_rate": "100"
+    },
+    {
+      "phase": "Regression",
+      "executed": "6",
+      "passed": "6",
+      "pass_rate": "100"
+    }
+  ],
+  "defects": {
+    "total_logged": 8,
+    "fixed": "5",
+    "deferred": "1",
+    "remaining_open": "2",
+    "severity_breakdown": {
+      "Critical": "1",
+      "High": "1",
+      "Medium": "3",
+      "Low": "3"
+    }
+  },
+  "recommendation": {
+    "title": "Recommendation",
+    "selection": "Conditional approval",
+    "rationale": "Core flows verified by pytest and browser smoke. Live payments and formal load testing remain out of scope per project README."
+  },
+  "last_sync": "2026-05-14"
+}

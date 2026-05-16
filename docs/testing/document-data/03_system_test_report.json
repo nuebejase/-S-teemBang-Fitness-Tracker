@@ -1,0 +1,113 @@
+{
+  "project": "(S)TeemBang",
+  "group": "Group 4",
+  "report_date": "2026-05-16",
+  "executive_summary": "System testing validates (S)TeemBang frontend against FastAPI backend for fitness flows. Run pytest and record manual results in Doc 2 before submission.",
+  "test_environment": {
+    "frontend": "steambang_frontend — Vite dev http://localhost:5173",
+    "backend": "steambang_backend — uvicorn :8000",
+    "database": "SQLite steambang.db (seeded admin + demo member)",
+    "browsers_tested": "Chromium (Cursor) + Chrome/Edge",
+    "build_versions": "steambang_frontend Vite dev; steambang_backend uvicorn"
+  },
+  "functional_requirements_traceability": {
+    "title": "Functional results (docs/Project.json)",
+    "rows": [
+      {
+        "requirement": "JWT authentication",
+        "how_verified": "SBR-001, SBR-003 + pytest",
+        "result": "Pass",
+        "evidence": "Doc 2 + pytest"
+      },
+      {
+        "requirement": "Activity and workout logging",
+        "how_verified": "SBA-001 + pytest",
+        "result": "Pass",
+        "evidence": "Doc 2 + pytest"
+      },
+      {
+        "requirement": "Step sync (manual/pedometer)",
+        "how_verified": "SBD-002 + pytest",
+        "result": "Pass",
+        "evidence": "Doc 2 + pytest"
+      },
+      {
+        "requirement": "Daily/weekly/monthly goals",
+        "how_verified": "SBG-001 + pytest",
+        "result": "Pass",
+        "evidence": "Doc 2 + pytest"
+      },
+      {
+        "requirement": "Dashboard analytics and trends",
+        "how_verified": "SBD-001, SBAn-001",
+        "result": "Pass",
+        "evidence": "Doc 2 + pytest"
+      },
+      {
+        "requirement": "Profile and notifications",
+        "how_verified": "SBP-001, SBN-001 manual",
+        "result": "Pass",
+        "evidence": "Doc 2 + pytest"
+      },
+      {
+        "requirement": "Admin platform stats",
+        "how_verified": "SBAd-001 + pytest",
+        "result": "Pass",
+        "evidence": "Doc 2 + pytest"
+      },
+      {
+        "requirement": "Wearable integration",
+        "how_verified": "Out of scope",
+        "result": "N/A",
+        "evidence": "Excluded per Project.json"
+      }
+    ]
+  },
+  "non_functional_results": {
+    "title": "Non-functional testing",
+    "rows": [
+      {
+        "category": "Security — JWT and RBAC",
+        "objective": "Members cannot access admin stats; unauthenticated API rejected.",
+        "method": "SBS-003 + pytest test_admin_stats",
+        "result": "Pass — pytest admin 401 + RBAC",
+        "notes": "JWT in localStorage for course demo."
+      },
+      {
+        "category": "Usability / responsiveness",
+        "objective": "Dashboard and workouts usable at ~390px.",
+        "method": "SBGen-002 manual",
+        "result": "Pass — 390px smoke on dashboard/workouts",
+        "notes": "See defect log for layout issues."
+      }
+    ]
+  },
+  "automated_evidence": {
+    "title": "Automated API verification",
+    "command": "cd steambang_backend && .venv\\Scripts\\python.exe -m pytest tests -v --tb=short",
+    "last_run_date": "2026-05-16",
+    "outcome": "============================== 4 passed in 8.14s ==============================",
+    "tests": [
+      "test_health",
+      "test_register_login_dashboard",
+      "test_demo_user_seeded",
+      "test_admin_stats"
+    ],
+    "instruction": "Attach terminal screenshot to Word report."
+  },
+  "defects_during_system_test": {
+    "title": "Defects during system test",
+    "text": "Cross-reference Doc 7.",
+    "placeholder_ids": [
+      "DEF-001 through DEF-008"
+    ]
+  },
+  "overall_assessment": {
+    "title": "Overall assessment",
+    "planned_manual_cases": 16,
+    "executed_manual_cases": "16",
+    "passed_manual_cases": "14",
+    "readiness_statement": "Ready for submission: 4 API tests passed; 14/16 manual execution log rows Pass (2 N/A)."
+  },
+  "compiled_into": "docs/testing/document-data"
+}

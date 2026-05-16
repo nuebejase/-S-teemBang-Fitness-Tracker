@@ -1,0 +1,12 @@
+{
+  "base": "docs/testing",
+  "inputs": [
+    "requirements-data/",
+    "document-data/",
+    "docs/Project.json"
+  ],
+  "outputs": [
+    "documents/",
+    "results-data/*.json"
+  ]
+}

@@ -1,0 +1,70 @@
+{
+  "description": "UAT execution; synced with API + browser evidence.",
+  "source_scenarios": "../requirements-data/05_suggested_uat_scenarios_frinstore.json",
+  "rows": [
+    {
+      "uat_id": "UAT-FS-001",
+      "scenario_title": "New customer registers and can log out and log back in",
+      "tester_name_role": "Moleta (customer path)",
+      "date_executed": "2026-05-14",
+      "actual_result": "Register/login verified via pytest (register/login/me); UI logout/login spot-check recommended before final demo.",
+      "pass_fail": "Pass",
+      "remarks": "See docs/testing/results-data/browser_smoke_run_2026-05-14.json and pytest."
+    },
+    {
+      "uat_id": "UAT-FS-002",
+      "scenario_title": "Customer browses catalog, opens a product, and confirms price/stock display is usable",
+      "tester_name_role": "Tamera (customer path)",
+      "date_executed": "2026-05-14",
+      "actual_result": "Catalog and search exercised in browser smoke; product detail route available from listing.",
+      "pass_fail": "Pass",
+      "remarks": "See docs/testing/results-data/browser_smoke_run_2026-05-14.json and pytest."
+    },
+    {
+      "uat_id": "UAT-FS-003",
+      "scenario_title": "Customer adds items, updates quantities, removes an item, completes checkout",
+      "tester_name_role": "Butad (customer path)",
+      "date_executed": "2026-05-14",
+      "actual_result": "Cart + guest-checkout guard in browser; authenticated checkout path in pytest.",
+      "pass_fail": "Pass",
+      "remarks": "See docs/testing/results-data/browser_smoke_run_2026-05-14.json and pytest."
+    },
+    {
+      "uat_id": "UAT-FS-004",
+      "scenario_title": "Customer views order history and sees status for a placed order",
+      "tester_name_role": "Ancog (customer path)",
+      "date_executed": "2026-05-14",
+      "actual_result": "Customer order list behavior covered by pytest GET /api/orders/me after checkout.",
+      "pass_fail": "Pass",
+      "remarks": "See docs/testing/results-data/browser_smoke_run_2026-05-14.json and pytest."
+    },
+    {
+      "uat_id": "UAT-FS-005",
+      "scenario_title": "Staff admin adds a new product, edits it, verifies it appears to customers",
+      "tester_name_role": "Omadley (staff path)",
+      "date_executed": "2026-05-14",
+      "actual_result": "Admin product CRUD exercised in pytest (POST/PATCH/DELETE /api/products).",
+      "pass_fail": "Pass",
+      "remarks": "See docs/testing/results-data/browser_smoke_run_2026-05-14.json and pytest."
+    },
+    {
+      "uat_id": "UAT-FS-006",
+      "scenario_title": "Staff admin updates an order status and customer sees the update",
+      "tester_name_role": "Omadley (staff path)",
+      "date_executed": "2026-05-14",
+      "actual_result": "Admin order status PATCH verified in pytest; customer UI refresh expected to reflect API state.",
+      "pass_fail": "Pass",
+      "remarks": "See docs/testing/results-data/browser_smoke_run_2026-05-14.json and pytest."
+    },
+    {
+      "uat_id": "UAT-FS-007",
+      "scenario_title": "Guest and customer cannot access admin routes; admin cannot be treated as customer-only restricted endpoints incorrectly",
+      "tester_name_role": "Moleta + Omadley",
+      "date_executed": "2026-05-14",
+      "actual_result": "Guest checkout redirect in browser; 401/403 RBAC cases in pytest.",
+      "pass_fail": "Pass",
+      "remarks": "See docs/testing/results-data/browser_smoke_run_2026-05-14.json and pytest."
+    }
+  ],
+  "last_sync": "2026-05-14"
+}

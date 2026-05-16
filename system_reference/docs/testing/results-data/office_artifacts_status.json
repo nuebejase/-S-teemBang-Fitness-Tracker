@@ -1,0 +1,49 @@
+{
+  "description": "Track whether generated Office files have real test results filled in (vs template only). Update results_status as you complete each deliverable.",
+  "generated_from": "../document-data/generate_documents.py",
+  "artifacts": [
+    {
+      "path": "../documents/Group6_FrinStore_Doc1_TestPlan.docx",
+      "json_source": "../document-data/01_test_plan.json",
+      "results_status": "pending",
+      "notes": "Sign-offs and dates when final."
+    },
+    {
+      "path": "../documents/Group6_FrinStore_Doc2_TestCases.xlsx",
+      "json_source": "../document-data/02_test_cases_document.json",
+      "results_status": "synced",
+      "notes": "JSON source updated 2026-05-14; re-run generate_documents.py to refresh xlsx."
+    },
+    {
+      "path": "../documents/Group6_FrinStore_Doc5_SystemTestReport.docx",
+      "json_source": "../document-data/03_system_test_report.json",
+      "results_status": "synced",
+      "notes": "document-data JSON filled; regenerate docx if needed."
+    },
+    {
+      "path": "../documents/Group6_FrinStore_Doc6_UATPlanReport.docx",
+      "json_source": "../document-data/04_uat_plan_and_report.json",
+      "results_status": "synced",
+      "notes": "Section 11 filled from uat_execution_results.json"
+    },
+    {
+      "path": "../documents/Group6_FrinStore_Doc7_DefectLog.xlsx",
+      "json_source": "../document-data/05_defect_bug_report_log.json",
+      "results_status": "pending",
+      "notes": "Update statuses and evidence paths."
+    },
+    {
+      "path": "../documents/Group6_FrinStore_Doc8_RegressionTestReport.docx",
+      "json_source": "../document-data/06_regression_test_report.json",
+      "results_status": "synced",
+      "notes": "Fill regression_run_results.json then copy to doc."
+    },
+    {
+      "path": "../documents/Group6_FrinStore_Doc9_TestSummaryReport.docx",
+      "json_source": "../document-data/07_test_summary_report.json",
+      "results_status": "synced",
+      "notes": "document-data JSON filled; regenerate docx if needed."
+    }
+  ],
+  "evidence_folder_suggestion": "docs/testing/results-data/evidence/ (create and store screenshots or exported logs here)"
+}

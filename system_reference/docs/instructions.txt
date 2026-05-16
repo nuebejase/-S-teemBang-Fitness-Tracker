@@ -1,0 +1,63 @@
+FrinStore — local setup and usage
+=================================
+
+Overview
+--------
+FrinStore is a small ice cream shop demo: a Vue 3 + Vite frontend (`frinstore_frontend`) and a FastAPI + SQLite backend (`frinstore_backend`). The API is prefixed with `/api`.
+
+Prerequisites
+-------------
+- Node.js 18+ (for npm)
+- Python 3.12+ recommended
+
+1) Backend (API)
+----------------
+Open a terminal:
+
+  cd frinstore_backend
+  python -m venv .venv
+  .venv\Scripts\activate
+  pip install -r requirements.txt
+  python -m uvicorn app.main:app --reload --host 127.0.0.1 --port 8000
+
+On first startup the app creates `frinstore.db` (unless you set `FRINSTORE_DATABASE_URL`) and seeds:
+- Admin user: admin@frinstore.com / admin123
+- About 100 catalog products (8 named flavors plus generated “Scoop Series” rows until the count reaches 100).
+
+Health check: http://127.0.0.1:8000/api/health
+
+2) Frontend (web UI)
+---------------------
+In another terminal:
+
+  cd frinstore_frontend
+  npm install
+  npm run dev
+
+Open the URL Vite prints (usually http://localhost:5173). In development, `/api` is proxied to the backend on port 8000, so keep both processes running.
+
+Optional: set `VITE_API_URL` in `.env.development` if you want the browser to call the API on a fixed origin instead of the Vite proxy.
+
+3) Try the flows
+----------------
+- Browse Products, add to cart, open Cart, change quantities, then Checkout (you must be logged in as a customer).
+- Sign up: Register → creates a customer account and signs you in.
+- Sign in: use admin credentials above for the admin dashboard, or your registered email/password for shopping.
+- Admin: Manage products (add / edit / delete in modals) and update order status on Admin Orders.
+
+4) Automated API tests
+----------------------
+From `frinstore_backend` (after `pip install -r requirements-dev.txt`):
+
+  .venv\Scripts\python.exe -m pytest tests -v
+
+Tests use a temporary SQLite file (see `tests/conftest.py`). They cover health, catalog size, register/login/me, duplicate email, customer checkout, admin-only restrictions, admin product CRUD + order status, and invalid login.
+
+From `frinstore_frontend` you can also run:
+
+  npm run test:api
+
+5) Troubleshooting
+------------------
+- “Cannot reach FrinStore API”: start uvicorn on 127.0.0.1:8000 and ensure the frontend dev server is running so the `/api` proxy works.
+- Empty catalog: delete `frinstore_backend/frinstore.db` and restart the API to re-run migrations and seeding (demo data will be recreated).

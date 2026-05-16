@@ -1,0 +1,65 @@
+{
+  "description": "Regression after documented fixes; API suite re-run.",
+  "related_defects": [
+    "DEF-003",
+    "DEF-007",
+    "DEF-008"
+  ],
+  "rows": [
+    {
+      "test_case_id": "FSR-003",
+      "previous_result": "Pass",
+      "new_result": "Pass",
+      "pass_fail": "Pass",
+      "tester": "pytest (frinstore_backend/tests)",
+      "date": "2026-05-14",
+      "notes": "Login success unchanged"
+    },
+    {
+      "test_case_id": "FCO-002",
+      "previous_result": "Pass",
+      "new_result": "Pass",
+      "pass_fail": "Pass",
+      "tester": "pytest (frinstore_backend/tests)",
+      "date": "2026-05-14",
+      "notes": "Checkout flow"
+    },
+    {
+      "test_case_id": "FCO-004",
+      "previous_result": "Fail",
+      "new_result": "Pass",
+      "pass_fail": "Pass",
+      "tester": "pytest (frinstore_backend/tests)",
+      "date": "2026-05-14",
+      "notes": "Validation messaging — retested Pass"
+    },
+    {
+      "test_case_id": "FSG-002",
+      "previous_result": "Pass",
+      "new_result": "Pass",
+      "pass_fail": "Pass",
+      "tester": "pytest (frinstore_backend/tests)",
+      "date": "2026-05-14",
+      "notes": "Cart persistence"
+    },
+    {
+      "test_case_id": "FSC-003",
+      "previous_result": "Pass",
+      "new_result": "Pass",
+      "pass_fail": "Pass",
+      "tester": "pytest (frinstore_backend/tests)",
+      "date": "2026-05-14",
+      "notes": "RBAC"
+    },
+    {
+      "test_case_id": "FGN-001",
+      "previous_result": "Pass",
+      "new_result": "Pass",
+      "pass_fail": "Pass",
+      "tester": "pytest (frinstore_backend/tests)",
+      "date": "2026-05-14",
+      "notes": "Health"
+    }
+  ],
+  "last_sync": "2026-05-14"
+}

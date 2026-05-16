@@ -1,0 +1,47 @@
+{
+  "source": "docs/Project.json",
+  "project": {
+    "name": "(S)TeemBang",
+    "subtitle": "Fitness Tracking Application",
+    "group": "Group 4",
+    "packages": [
+      {
+        "name": "steambang_frontend",
+        "path": "steambang_frontend"
+      },
+      {
+        "name": "steambang_backend",
+        "path": "steambang_backend"
+      }
+    ]
+  },
+  "functional_requirements_for_traceability": [
+    "JWT authentication",
+    "Activity and workout logging",
+    "Step sync",
+    "Goals",
+    "Dashboard analytics and trends",
+    "Profile and notifications",
+    "Admin platform stats"
+  ],
+  "demo_credentials_readme": {
+    "admin_email": "admin@steambang.com",
+    "admin_password": "admin123",
+    "demo_email": "demo@steambang.com",
+    "demo_password": "demo1234"
+  },
+  "team_members": [
+    {
+      "name": "Christel"
+    },
+    {
+      "name": "Sherwin"
+    },
+    {
+      "name": "John Rae"
+    },
+    {
+      "name": "Jase Karl"
+    }
+  ]
+}

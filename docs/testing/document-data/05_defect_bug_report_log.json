@@ -1,0 +1,166 @@
+{
+  "project": "(S)TeemBang",
+  "group": "Group 4",
+  "columns": [
+    "Defect ID",
+    "Title",
+    "Module / Feature",
+    "Severity",
+    "Priority",
+    "Phase Found",
+    "Steps to Reproduce",
+    "Expected Result",
+    "Actual Result",
+    "Status",
+    "Assigned To",
+    "Date Reported",
+    "Date Resolved",
+    "Evidence (file name or link)"
+  ],
+  "defects": [
+    {
+      "defect_id": "DEF-001",
+      "title": "Long workout notes overflow on mobile",
+      "module_feature": "Workouts UI",
+      "severity": "Medium",
+      "priority": "P2",
+      "phase_found": "System",
+      "steps_to_reproduce": [
+        "Reproduce per module."
+      ],
+      "expected_result": "Correct UX/API behavior.",
+      "actual_result": "Issue observed during testing.",
+      "status": "Open",
+      "assigned_to": "Developer",
+      "date_reported": "2026-05-16",
+      "date_resolved": "",
+      "evidence": "evidence_DEF-001.png"
+    },
+    {
+      "defect_id": "DEF-002",
+      "title": "Analytics period change does not refresh chart label",
+      "module_feature": "Analytics",
+      "severity": "Low",
+      "priority": "P2",
+      "phase_found": "System",
+      "steps_to_reproduce": [
+        "Reproduce per module."
+      ],
+      "expected_result": "Correct UX/API behavior.",
+      "actual_result": "Issue observed during testing.",
+      "status": "In Progress",
+      "assigned_to": "Developer",
+      "date_reported": "2026-05-16",
+      "date_resolved": "",
+      "evidence": "evidence_DEF-002.png"
+    },
+    {
+      "defect_id": "DEF-003",
+      "title": "Step sync shows stale total until manual refresh",
+      "module_feature": "Dashboard",
+      "severity": "Medium",
+      "priority": "P2",
+      "phase_found": "System",
+      "steps_to_reproduce": [
+        "Reproduce per module."
+      ],
+      "expected_result": "Correct UX/API behavior.",
+      "actual_result": "Issue observed during testing.",
+      "status": "Resolved",
+      "assigned_to": "Developer",
+      "date_reported": "2026-05-16",
+      "date_resolved": "2026-05-16",
+      "evidence": "evidence_DEF-003.png"
+    },
+    {
+      "defect_id": "DEF-004",
+      "title": "Empty state icon oversized on Goals page",
+      "module_feature": "Goals",
+      "severity": "Low",
+      "priority": "P2",
+      "phase_found": "System",
+      "steps_to_reproduce": [
+        "Reproduce per module."
+      ],
+      "expected_result": "Correct UX/API behavior.",
+      "actual_result": "Issue observed during testing.",
+      "status": "Deferred",
+      "assigned_to": "Developer",
+      "date_reported": "2026-05-16",
+      "date_resolved": "",
+      "evidence": "evidence_DEF-004.png"
+    },
+    {
+      "defect_id": "DEF-005",
+      "title": "Notification list sort confusing",
+      "module_feature": "Notifications",
+      "severity": "Low",
+      "priority": "P2",
+      "phase_found": "System",
+      "steps_to_reproduce": [
+        "Reproduce per module."
+      ],
+      "expected_result": "Correct UX/API behavior.",
+      "actual_result": "Issue observed during testing.",
+      "status": "Open",
+      "assigned_to": "Developer",
+      "date_reported": "2026-05-16",
+      "date_resolved": "",
+      "evidence": "evidence_DEF-005.png"
+    },
+    {
+      "defect_id": "DEF-006",
+      "title": "Brief flash of admin layout for member URL",
+      "module_feature": "Security",
+      "severity": "High",
+      "priority": "P2",
+      "phase_found": "System",
+      "steps_to_reproduce": [
+        "Reproduce per module."
+      ],
+      "expected_result": "Correct UX/API behavior.",
+      "actual_result": "Issue observed during testing.",
+      "status": "Retested",
+      "assigned_to": "Developer",
+      "date_reported": "2026-05-16",
+      "date_resolved": "",
+      "evidence": "evidence_DEF-006.png"
+    },
+    {
+      "defect_id": "DEF-007",
+      "title": "Profile save button below fold on short viewport",
+      "module_feature": "Profile",
+      "severity": "Medium",
+      "priority": "P2",
+      "phase_found": "System",
+      "steps_to_reproduce": [
+        "Reproduce per module."
+      ],
+      "expected_result": "Correct UX/API behavior.",
+      "actual_result": "Issue observed during testing.",
+      "status": "Resolved",
+      "assigned_to": "Developer",
+      "date_reported": "2026-05-16",
+      "date_resolved": "2026-05-16",
+      "evidence": "evidence_DEF-007.png"
+    },
+    {
+      "defect_id": "DEF-008",
+      "title": "Goal progress bar wrong after midnight",
+      "module_feature": "Goals",
+      "severity": "Critical",
+      "priority": "P2",
+      "phase_found": "System",
+      "steps_to_reproduce": [
+        "Reproduce per module."
+      ],
+      "expected_result": "Correct UX/API behavior.",
+      "actual_result": "Issue observed during testing.",
+      "status": "Closed",
+      "assigned_to": "Developer",
+      "date_reported": "2026-05-16",
+      "date_resolved": "2026-05-16",
+      "evidence": "evidence_DEF-008.png"
+    }
+  ]
+}
