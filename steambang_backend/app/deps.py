@@ -11,11 +11,7 @@ from app.security import decode_token
 security = HTTPBearer(auto_error=False)
 
 
-def get_db_session():
-    yield from get_db()
-
-
-DbSession = Annotated[Session, Depends(get_db_session)]
+DbSession = Annotated[Session, Depends(get_db)]
 
 
 def get_current_user(

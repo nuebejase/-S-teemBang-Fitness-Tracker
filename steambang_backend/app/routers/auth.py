@@ -3,7 +3,7 @@ from sqlalchemy import select
 from sqlalchemy.orm import Session
 
 from app.database import get_db
-from app.deps import CurrentUser
+from app.deps import CurrentUser, DbSession
 from app.models import User, UserProfile, UserRole
 from app.schemas import ProfileOut, ProfileUpdate, TokenResponse, UserCreate, UserLogin, UserOut
 from app.security import create_access_token, hash_password, verify_password
@@ -26,13 +26,14 @@ def _profile_out(profile: UserProfile) -> ProfileOut:
 
 
 def _ensure_profile(db: Session, user: User) -> UserProfile:
-    if user.profile:
-        return user.profile
+    profile = db.scalar(select(UserProfile).where(UserProfile.user_id == user.id))
+    if profile:
+        return profile
     profile = UserProfile(user_id=user.id)
     db.add(profile)
     db.commit()
-    db.refresh(user)
-    return user.profile  # type: ignore[return-value]
+    db.refresh(profile)
+    return profile
 
 
 @router.post("/register", response_model=TokenResponse)
@@ -70,13 +71,13 @@ def read_me(user: CurrentUser):
 
 
 @router.get("/profile", response_model=ProfileOut)
-def read_profile(user: CurrentUser, db: Session = Depends(get_db)):
+def read_profile(user: CurrentUser, db: DbSession):
     profile = _ensure_profile(db, user)
     return _profile_out(profile)
 
 
 @router.patch("/profile", response_model=ProfileOut)
-def update_profile(body: ProfileUpdate, user: CurrentUser, db: Session = Depends(get_db)):
+def update_profile(body: ProfileUpdate, user: CurrentUser, db: DbSession):
     profile = _ensure_profile(db, user)
     data = body.model_dump(exclude_unset=True)
     for key, value in data.items():
