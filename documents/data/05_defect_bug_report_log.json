@@ -1,0 +1,38 @@
+{
+  "headers": [
+    "Defect ID",
+    "Date Found",
+    "Module",
+    "Severity",
+    "Priority",
+    "Summary",
+    "Steps to Reproduce",
+    "Expected Result",
+    "Actual Result",
+    "Status",
+    "Found By",
+    "Assigned To",
+    "Fixed In",
+    "Verified By",
+    "Date Closed"
+  ],
+  "rows": [
+    ["DEF-001", "2026-05-08", "Profile", "High", "P1", "Profile photo not displaying after upload", "1. Login as member\n2. Edit profile\n3. Upload JPEG avatar\n4. Save and view dashboard", "Avatar visible on profile and dashboard", "Broken image icon; 404 on avatar URL", "Closed", "Apas, Christel Grace", "Zerrudo, Jase Karl", "v1.0.0-build3", "Apas, Christel Grace", "2026-05-09"],
+    ["DEF-002", "2026-05-07", "Activities", "Medium", "P2", "Pedometer requires device sensors; fails on desktop", "1. Open Dashboard on desktop\n2. Click Start pedometer", "Steps trackable on all platforms", "Error: device motion not available", "Closed", "Tuazon, John Rae", "Zerrudo, Jase Karl", "v1.0.0-build4", "Tuazon, John Rae", "2026-05-08"],
+    ["DEF-003", "2026-05-09", "UI/UX", "Medium", "P2", "Form inputs white-on-white on Goals, Train, Stats pages", "1. Open Goals\n2. Click New goal\n3. Observe input fields", "Dark theme inputs with readable text", "White background, white text invisible", "Closed", "Labe, Sherwin", "Zerrudo, Jase Karl", "v1.0.0-build5", "Apas, Christel Grace", "2026-05-10"],
+    ["DEF-004", "2026-05-09", "Admin", "Medium", "P2", "Admin user detail missing daily target progress", "1. Login as admin\n2. Expand member card", "Show steps/calories/workouts targets and today progress", "Only basic profile info shown", "Closed", "Labe, Sherwin", "Zerrudo, Jase Karl", "v1.0.0-build6", "Labe, Sherwin", "2026-05-10"],
+    ["DEF-005", "2026-05-14", "Analytics", "Low", "P4", "Chart legend text small on mobile viewport", "1. Open Stats on 375px width\n2. View chart legend", "Legend readable without zoom", "Legend text 10px, hard to read", "Open", "Apas, Christel Grace", "Zerrudo, Jase Karl", "—", "—", "—"],
+    ["DEF-006", "2026-05-14", "Goals", "Low", "P4", "No confirmation before deleting goal", "1. Goals page\n2. Click delete on goal", "Confirm dialog before delete", "Goal deleted immediately", "Open", "Tuazon, John Rae", "Zerrudo, Jase Karl", "—", "—", "—"],
+    ["DEF-007", "2026-05-06", "Auth", "Low", "P3", "Password field shows no strength indicator", "1. Register new user\n2. Enter weak password", "Optional strength hint", "No indicator (acceptable for MVP)", "Closed", "Apas, Christel Grace", "—", "N/A — accepted", "Tuazon, John Rae", "2026-05-07"],
+    ["DEF-008", "2026-05-10", "Backend", "Medium", "P2", "Schema migration error on fresh DB without user_profiles table", "1. Delete DB\n2. Start backend", "Clean migration on empty DB", "OperationalError on migrate_schema", "Closed", "Zerrudo, Jase Karl", "Zerrudo, Jase Karl", "v1.0.0-build2", "Zerrudo, Jase Karl", "2026-05-10"]
+  ],
+  "summary": {
+    "total": 8,
+    "closed": 6,
+    "open": 2,
+    "critical": 0,
+    "high": 1,
+    "medium": 4,
+    "low": 3
+  }
+}

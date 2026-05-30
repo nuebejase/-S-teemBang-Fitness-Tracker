@@ -1,0 +1,209 @@
+{
+  "title": "Test Plan — (S)TeemBang Fitness Tracking Application",
+  "identifier": "GP4-SB-TP-001",
+  "sections": [
+    {
+      "heading": "1. Introduction",
+      "paragraphs": [
+        "This Test Plan defines the overall testing strategy, scope, schedule, and responsibilities for (S)TeemBang, a fitness tracking web application developed by Group 4 for the Software Development course (AY 2025–2026).",
+        "The system enables health-conscious users to register and authenticate securely, track steps and workouts, set daily/weekly/monthly goals, view analytics dashboards, manage profiles (including avatar upload and daily targets for steps, calories, and workouts), receive notifications, and allows administrators to monitor member activity and platform metrics.",
+        "Technology stack under test: Vue 3 + Vite frontend, FastAPI backend, SQLAlchemy + SQLite database, JWT authentication. Testing follows IEEE 829-1998 principles adapted for an Agile (Scrum) delivery model."
+      ]
+    },
+    {
+      "heading": "2. Scope",
+      "paragraphs": [
+        "In scope: user registration/login (member and admin roles), profile management with photo upload, activity logging (steps sync, workout timer, calorie logging), goal creation and metric-specific tracking, dashboard daily goal rings, analytics trends, notifications, admin console with per-user daily progress, API integration tests (PyTest), security (JWT, role-based access), usability on desktop browsers, and basic performance of API responses under development load.",
+        "Out of scope: wearable device APIs (Apple Health, Google Fit), payment/subscription processing, AI coaching, nutrition engine, native mobile app store deployment, load testing beyond 50 concurrent simulated users, and third-party OAuth providers."
+      ]
+    },
+    {
+      "heading": "3. Test Items",
+      "bullets": [
+        "Authentication module (register, login, JWT, /api/auth/me)",
+        "User profile module (CRUD, avatar upload, daily targets)",
+        "Activity module (workouts, step sync, calorie log)",
+        "Goals module (steps/calories/workouts goals, progress calculation)",
+        "Analytics module (dashboard, trends, streak)",
+        "Notifications module (list, mark read, create reminder)",
+        "Admin module (stats, users overview, platform activity)",
+        "Frontend pages: Dashboard, Train, Goals, Stats, Profile, Admin"
+      ]
+    },
+    {
+      "heading": "4. Features to Be Tested (Risk Level)",
+      "table": {
+        "headers": ["Feature", "Risk", "Rationale"],
+        "rows": [
+          ["JWT authentication & authorization", "High", "Security gate for all protected data"],
+          ["Activity logging & calorie estimation", "High", "Core business value"],
+          ["Daily goal progress calculation", "High", "Drives user engagement metrics"],
+          ["Profile photo upload & display", "Medium", "File handling and URL resolution"],
+          ["Workout timer & step simulation", "Medium", "Client-side tracking UX"],
+          ["Admin user overview", "Medium", "Multi-user data aggregation"],
+          ["Analytics trend charts", "Low", "Read-only visualization"],
+          ["Notifications CRUD", "Low", "Supplementary feature"]
+        ]
+      }
+    },
+    {
+      "heading": "5. Features Not to Be Tested",
+      "table": {
+        "headers": ["Feature", "Justification"],
+        "rows": [
+          ["Wearable device integration", "Explicitly excluded from project scope (SDLC)"],
+          ["OAuth / social login", "Not implemented; JWT email/password only"],
+          ["Production cloud deployment", "Out of pre-final scope; local/staging only"],
+          ["Payment processing", "Excluded from scope"]
+        ]
+      }
+    },
+    {
+      "heading": "6. Approach and Strategy",
+      "bullets": [
+        "Unit/Component: PyTest automated tests on FastAPI routes and service functions",
+        "Integration: API tests exercising auth → activities → goals → analytics flow",
+        "System: End-to-end manual and automated validation against functional requirements FR1–FR8",
+        "UAT: Business scenarios executed by non-developer classmates acting as fitness users",
+        "Regression: Re-execution of failed/affected test cases after defect fixes",
+        "Tools: PyTest, FastAPI TestClient, Vue/Vite dev server, Chrome/Edge browsers, python-docx/openpyxl for documentation"
+      ]
+    },
+    {
+      "heading": "7. Pass / Fail Criteria",
+      "bullets": [
+        "Pass: Actual result matches expected result; no severity Critical/High open defects for the feature",
+        "Fail: Incorrect data, unauthorized access, crash, or missing required UI/API behavior",
+        "Automated API tests must achieve 100% pass rate before system test sign-off",
+        "UAT requires ≥85% pass rate on business scenarios with no Critical open defects"
+      ]
+    },
+    {
+      "heading": "8. Test Deliverables",
+      "bullets": [
+        "Doc 1 — Test Plan (this document)",
+        "Doc 2 — Test Cases Document (≥15 cases)",
+        "Doc 5 — System Test Report",
+        "Doc 6 — UAT Plan & Report",
+        "Doc 7 — Defect / Bug Report Log",
+        "Doc 8 — Regression Test Report",
+        "Doc 9 — Test Summary Report"
+      ]
+    },
+    {
+      "heading": "9. Test Tasks and Schedule",
+      "table": {
+        "headers": ["Phase", "Activities", "Dates", "Owner"],
+        "rows": [
+          ["Planning", "Test Plan, Test Cases", "Apr 28 – May 2, 2026", "Labe, Sherwin"],
+          ["System Test", "Execute TC-001–TC-020, API automation", "May 3 – May 7, 2026", "Tuazon, John Rae"],
+          ["UAT", "User scenarios with classmates", "May 8 – May 11, 2026", "Apas, Christel Grace"],
+          ["Regression", "Re-test fixed defects", "May 12, 2026", "Zerrudo, Jase Karl"],
+          ["Closure", "Summary report & submission", "May 13, 2026", "All members"]
+        ]
+      }
+    },
+    {
+      "heading": "10. Environmental Needs",
+      "bullets": [
+        "Hardware: Windows 10/11 PC, 8 GB RAM minimum, stable network",
+        "Software: Python 3.11+, Node.js 18+, Chrome/Edge latest",
+        "Backend: uvicorn on http://127.0.0.1:8000",
+        "Frontend: Vite dev server on http://localhost:5173",
+        "Database: SQLite file steambang.db (seeded demo data)",
+        "Test accounts: demo@steambang.com / demo1234; admin@steambang.com / admin123"
+      ]
+    },
+    {
+      "heading": "11. Responsibilities",
+      "table": {
+        "headers": ["Activity", "Responsible"],
+        "rows": [
+          ["Test planning & documentation", "Labe, Sherwin (QA Lead)"],
+          ["Automated API tests", "Zerrudo, Jase Karl"],
+          ["Manual system testing", "Tuazon, John Rae"],
+          ["UAT coordination", "Apas, Christel Grace"],
+          ["Defect triage & fixes", "All developers"],
+          ["Final sign-off", "Project Lead — Zerrudo, Jase Karl"]
+        ]
+      }
+    },
+    {
+      "heading": "12. Risks and Contingencies",
+      "table": {
+        "headers": ["Risk", "Impact", "Mitigation"],
+        "rows": [
+          ["Backend not running during UAT", "High", "Provide README startup script; test day checklist"],
+          ["Browser-specific UI issues", "Medium", "Test Chrome and Edge; document known limitations"],
+          ["SQLite schema migration on old DB", "Medium", "Ship migrate_schema(); document DB reset steps"],
+          ["Insufficient UAT participants", "Medium", "Recruit 3 classmates minimum; record names in UAT report"]
+        ]
+      }
+    },
+    {
+      "heading": "13. Test Levels and Types",
+      "paragraphs": [
+        "Testing is organized into four levels aligned with the V-model and Agile sprint cadence. Each level has defined entry/exit criteria and assigned owners.",
+        "Unit testing focuses on isolated backend functions (calorie estimation, goal progress calculation, JWT token creation). Integration testing validates API route chains using FastAPI TestClient with an in-memory or file SQLite database. System testing exercises the full stack through the browser against seeded demo data. User acceptance testing validates business scenarios from a non-developer perspective."
+      ],
+      "table": {
+        "headers": ["Level", "Type", "Owner", "Tools", "Coverage Target"],
+        "rows": [
+          ["Unit", "White-box / API route", "Zerrudo, Jase Karl", "PyTest", "Critical service functions"],
+          ["Integration", "API flow", "Zerrudo, Jase Karl", "PyTest + TestClient", "Auth → Activity → Analytics"],
+          ["System", "Functional E2E", "Tuazon, John Rae", "Chrome, manual scripts", "FR1–FR8, 20 test cases"],
+          ["System", "Non-functional", "Apas, Christel Grace", "Browser devtools, timing", "Performance, usability, security"],
+          ["UAT", "Business scenario", "Apas, Christel Grace", "UAT scripts", "9 user scenarios"],
+          ["Regression", "Re-test after fix", "All QA members", "TC subset + PyTest", "Affected modules + smoke"]
+        ]
+      }
+    },
+    {
+      "heading": "14. Requirements Traceability Matrix",
+      "paragraphs": [
+        "The following matrix links SDLC functional requirements to test cases and deliverables. This ensures complete coverage before final submission."
+      ],
+      "table": {
+        "headers": ["Req ID", "Requirement Summary", "Test Cases", "Test Phase", "Status"],
+        "rows": [
+          ["FR1", "Secure registration and authentication", "TC-001–004, TC-017–018", "System, Automation", "Planned"],
+          ["FR2", "Log and categorize workouts", "TC-008, TC-011", "System, UAT", "Planned"],
+          ["FR3", "Track daily steps", "TC-007, TC-009", "System, UAT", "Planned"],
+          ["FR4", "Calculate calories burned", "TC-008, TC-012", "System", "Planned"],
+          ["FR5", "Define and monitor goals", "TC-010–012", "System, UAT", "Planned"],
+          ["FR6", "Analytics and visual reports", "TC-013, TC-007", "System, UAT", "Planned"],
+          ["FR7", "Store historical activity logs", "TC-008, TC-009", "System", "Planned"],
+          ["FR8", "Notifications and reminders", "TC-014", "System, UAT", "Planned"],
+          ["NFR1", "API response under 2 seconds", "TC-020", "System", "Planned"],
+          ["NFR2", "Role-based access control", "TC-004, TC-017–018", "System, Automation", "Planned"]
+        ]
+      }
+    },
+    {
+      "heading": "15. Suspension and Resumption Criteria",
+      "bullets": [
+        "Testing will be suspended if more than 30% of planned test cases fail in a single cycle, indicating a build instability.",
+        "Testing will be suspended if a Critical defect blocks login or data persistence for all users.",
+        "Testing resumes after a new build is deployed, release notes are published, and affected test cases are identified for regression.",
+        "A suspension log entry must be recorded in the Defect Log with date, reason, and responsible developer."
+      ]
+    },
+    {
+      "heading": "16. Defect Management Process",
+      "paragraphs": [
+        "All defects discovered during any test phase are logged in Doc 7 (Defect / Bug Report Log) with a unique ID (DEF-xxx), severity, steps to reproduce, and status. Severity definitions: Critical — system unusable or data loss; High — major feature broken with no workaround; Medium — feature impaired with workaround; Low — cosmetic or minor UX issue.",
+        "Developers assign fixes to a build number. QA verifies closure and updates the Verified By and Date Closed fields. Open Critical or High defects block UAT exit unless explicitly deferred with instructor approval."
+      ]
+    },
+    {
+      "heading": "17. References",
+      "bullets": [
+        "SDLC to Real Systems.pdf — Project scope and requirements (Group 4)",
+        "Testing_Documents_Requirements.pdf — Final deliverable specifications",
+        "IEEE Std 829-1998 — Software Test Documentation",
+        "(S)TeemBang README.md — Environment setup and demo accounts",
+        "steambang_backend/tests/test_api.py — Automated test suite"
+      ]
+    }
+  ]
+}

@@ -9,6 +9,7 @@ import {
   fetchActivitiesApi,
   fetchAdminActivitiesApi,
   fetchAdminStatsApi,
+  fetchAdminUsersApi,
   fetchDashboardApi,
   fetchGoalsApi,
   fetchMeApi,
@@ -20,12 +21,15 @@ import {
   markNotificationReadApi,
   registerApi,
   syncStepsApi,
+  updateGoalApi,
   updateProfileApi,
+  uploadAvatarApi,
 } from '@/lib/api'
 import { STORAGE_KEYS } from '@/constants/storage'
 import type {
   Activity,
   AdminStats,
+  AdminUser,
   Dashboard,
   Goal,
   Notification,
@@ -43,6 +47,7 @@ export const useAppStore = defineStore('app', () => {
   const trends = ref<TrendPoint[]>([])
   const notifications = ref<Notification[]>([])
   const adminStats = ref<AdminStats | null>(null)
+  const adminUsers = ref<AdminUser[]>([])
 
   const loading = ref(false)
   const bootstrapError = ref<string | null>(null)
@@ -52,7 +57,52 @@ export const useAppStore = defineStore('app', () => {
   async function refreshDashboard() {
     if (!user.value || user.value.role === 'admin') return
     dashboard.value = await fetchDashboardApi()
-    goals.value = dashboard.value.activeGoals
+  }
+
+  async function refreshGoals() {
+    if (!user.value || user.value.role === 'admin') return
+    goals.value = await fetchGoalsApi()
+  }
+
+  async function refreshAfterActivity() {
+    if (!user.value || user.value.role === 'admin') return
+    await Promise.all([
+      refreshDashboard(),
+      refreshGoals(),
+      refreshNotifications(),
+      refreshTrends(),
+      refreshActivities(),
+    ])
+  }
+
+  async function syncDailyGoalsFromProfile() {
+    if (!profile.value) return
+    const allGoals = await fetchGoalsApi()
+    const pairs: { metric: Goal['metric']; target: number }[] = [
+      { metric: 'steps', target: profile.value.dailyStepTarget },
+      { metric: 'calories', target: profile.value.dailyCalorieTarget },
+      { metric: 'workouts', target: profile.value.dailyWorkoutTarget },
+    ]
+    for (const { metric, target } of pairs) {
+      const existing = allGoals.find((g) => g.metric === metric && g.period === 'daily' && g.isActive)
+      if (existing) {
+        if (existing.targetValue !== target) {
+          await updateGoalApi(existing.id, { target_value: target })
+        }
+      } else {
+        await createGoalApi({ metric, period: 'daily', target_value: target })
+      }
+    }
+    await refreshGoals()
+  }
+
+  async function syncProfileTargetFromDailyGoal(metric: Goal['metric'], targetValue: number) {
+    if (!profile.value) return
+    const patch: Parameters<typeof updateProfileApi>[0] = {}
+    if (metric === 'steps') patch.daily_step_target = targetValue
+    if (metric === 'calories') patch.daily_calorie_target = targetValue
+    if (metric === 'workouts') patch.daily_workout_target = targetValue
+    profile.value = await updateProfileApi(patch)
   }
 
   async function refreshActivities() {
@@ -82,7 +132,8 @@ export const useAppStore = defineStore('app', () => {
   async function refreshAdmin() {
     if (user.value?.role !== 'admin') return
     adminStats.value = await fetchAdminStatsApi()
-    activities.value = await fetchAdminActivitiesApi()
+    adminUsers.value = await fetchAdminUsersApi()
+    activities.value = adminUsers.value.flatMap((u) => u.recentActivities)
   }
 
   async function initializeApp() {
@@ -138,6 +189,7 @@ export const useAppStore = defineStore('app', () => {
     trends.value = []
     notifications.value = []
     adminStats.value = null
+    adminUsers.value = []
     localStorage.removeItem(STORAGE_KEYS.accessToken)
   }
 
@@ -155,8 +207,8 @@ export const useAppStore = defineStore('app', () => {
       notes: payload.notes ?? '',
     })
     activities.value.unshift(created)
-    await refreshDashboard()
-    await refreshTrends()
+    await refreshAfterActivity()
+    return created
   }
 
   async function syncSteps(steps: number) {
@@ -166,19 +218,21 @@ export const useAppStore = defineStore('app', () => {
     )
     if (idx >= 0) activities.value[idx] = updated
     else activities.value.unshift(updated)
-    await refreshDashboard()
-    await refreshTrends()
+    await refreshAfterActivity()
   }
 
   async function removeActivity(id: string) {
     await deleteActivityApi(id)
     activities.value = activities.value.filter((a) => a.id !== id)
-    await refreshDashboard()
+    await refreshAfterActivity()
   }
 
   async function addGoal(metric: Goal['metric'], period: Goal['period'], targetValue: number) {
     const created = await createGoalApi({ metric, period, target_value: targetValue })
     goals.value.unshift(created)
+    if (period === 'daily') {
+      await syncProfileTargetFromDailyGoal(metric, targetValue)
+    }
     await refreshDashboard()
   }
 
@@ -195,8 +249,28 @@ export const useAppStore = defineStore('app', () => {
       age: payload.age ?? undefined,
       fitness_level: payload.fitnessLevel,
       daily_step_target: payload.dailyStepTarget,
+      daily_calorie_target: payload.dailyCalorieTarget,
+      daily_workout_target: payload.dailyWorkoutTarget,
     })
+    await syncDailyGoalsFromProfile()
     await refreshDashboard()
+  }
+
+  async function logCalories(calories: number) {
+    const created = await createActivityApi({
+      activity_type: 'workout',
+      category: 'other',
+      title: 'Calorie log',
+      duration_minutes: 1,
+      calories_burned: calories,
+    })
+    activities.value.unshift(created)
+    await refreshAfterActivity()
+    return created
+  }
+
+  async function uploadAvatar(file: File) {
+    profile.value = await uploadAvatarApi(file)
   }
 
   async function markRead(id: string) {
@@ -224,6 +298,7 @@ export const useAppStore = defineStore('app', () => {
     trends,
     notifications,
     adminStats,
+    adminUsers,
     loading,
     bootstrapError,
     unreadCount,
@@ -232,6 +307,8 @@ export const useAppStore = defineStore('app', () => {
     register,
     logout,
     refreshDashboard,
+    refreshGoals,
+    refreshAfterActivity,
     refreshActivities,
     refreshTrends,
     refreshNotifications,
@@ -243,6 +320,8 @@ export const useAppStore = defineStore('app', () => {
     addGoal,
     removeGoal,
     saveProfile,
+    uploadAvatar,
+    logCalories,
     markRead,
     markAllRead,
     addReminder,

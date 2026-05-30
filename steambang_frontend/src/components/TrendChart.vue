@@ -31,7 +31,7 @@ function label(d: string) {
         {{ values[i] > 0 ? formatNumber(values[i]) : '' }}
       </span>
       <div
-        class="w-full rounded-t-md bg-gradient-to-t from-primary to-emerald-400 transition-all"
+        class="w-full rounded-t-lg bg-gradient-to-t from-emerald-600 to-emerald-400/80 transition-all duration-500 hover:from-emerald-500"
         :style="{ height: barHeight(values[i]) }"
       />
       <span class="text-[10px] text-muted-foreground">{{ label(p.date) }}</span>

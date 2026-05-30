@@ -1,0 +1,63 @@
+{
+  "headers": [
+    "Test Case ID",
+    "Module",
+    "Title",
+    "Preconditions",
+    "Test Steps",
+    "Test Data",
+    "Expected Result",
+    "Actual Result",
+    "Pass/Fail",
+    "Priority",
+    "Tester",
+    "Date Executed"
+  ],
+  "rows": [
+    ["TC-001", "Auth", "Member registration", "Backend and frontend running; email not registered", "1. Open /register\n2. Enter name, email, password\n3. Submit", "name: Test User; email: tc001@test.com; password: secret12", "Account created; redirected to profile setup; JWT stored", "Account created; redirected to profile; token stored in localStorage", "Pass", "Critical", "Tuazon, John Rae", "2026-05-05"],
+    ["TC-002", "Auth", "Member login valid credentials", "User demo@steambang.com exists", "1. Open /login\n2. Enter demo credentials\n3. Submit", "email: demo@steambang.com; password: demo1234", "Login success; dashboard loads with member data", "Dashboard displayed with steps/calories/workouts rings", "Pass", "Critical", "Tuazon, John Rae", "2026-05-05"],
+    ["TC-003", "Auth", "Login invalid password", "User exists", "1. Open /login\n2. Enter wrong password\n3. Submit", "email: demo@steambang.com; password: wrongpass", "Error toast; remain on login page", "Invalid email or password toast shown", "Pass", "High", "Apas, Christel Grace", "2026-05-06"],
+    ["TC-004", "Auth", "Admin login and route guard", "Admin account exists", "1. Login as admin\n2. Navigate to /", "admin@steambang.com / admin123", "Redirected to /admin; member routes blocked", "Admin console displayed; member-only pages redirect", "Pass", "Critical", "Labe, Sherwin", "2026-05-06"],
+    ["TC-005", "Profile", "Complete profile setup", "Logged in as new member", "1. Go to Profile\n2. Enter height, weight, age, level, targets\n3. Save", "height: 170; weight: 68; age: 22; steps: 10000; cal: 500; workouts: 1", "Profile saved; view mode shows all fields", "View mode displayed with stats and daily targets", "Pass", "High", "Apas, Christel Grace", "2026-05-07"],
+    ["TC-006", "Profile", "Upload profile photo", "Logged in member", "1. Profile → Edit\n2. Tap camera icon\n3. Select JPEG <2MB", "test-avatar.jpg", "Photo uploads; avatar visible on dashboard and profile", "Avatar displayed after upload (backend URL resolved)", "Pass", "High", "Zerrudo, Jase Karl", "2026-05-08"],
+    ["TC-007", "Dashboard", "Daily goal rings update", "Demo user logged in; profile targets set", "1. Open Dashboard\n2. Observe rings\n3. Sync 5000 steps", "steps: 5000 via sync", "Steps ring reflects new count vs target", "Steps ring updated; progress % increased", "Pass", "Critical", "Tuazon, John Rae", "2026-05-07"],
+    ["TC-008", "Activities", "Log workout via timer", "Member logged in", "1. Train page → Timer mode\n2. Start timer 30s\n3. Save workout", "category: running", "Workout saved; today workouts +1 on dashboard", "Workout logged; dashboard workouts count increased", "Pass", "Critical", "Labe, Sherwin", "2026-05-07"],
+    ["TC-009", "Activities", "Simulate walk and sync steps", "Member on dashboard", "1. Click Simulate walk\n2. Wait 5 seconds\n3. Stop and Sync", "simulated steps", "Steps added to today's total", "Steps synced successfully toast; count updated", "Pass", "High", "Apas, Christel Grace", "2026-05-08"],
+    ["TC-010", "Goals", "Create daily steps goal", "Member logged in", "1. Goals → New goal\n2. Metric: steps, Period: daily, Target: 8000\n3. Add", "target: 8000", "Goal appears with 0% progress", "Goal created and listed with progress bar", "Pass", "High", "Tuazon, John Rae", "2026-05-06"],
+    ["TC-011", "Goals", "Workout goal timer tracking", "Workout daily goal exists", "1. Expand workout goal\n2. Start timer\n3. Log workout", "category: strength; 2 min timer", "Goal progress increases after workout log", "Workout logged; goal current_value updated", "Pass", "High", "Labe, Sherwin", "2026-05-08"],
+    ["TC-012", "Goals", "Calorie goal manual log", "Calorie goal exists", "1. Expand calorie goal\n2. Enter 250 kcal\n3. Log kcal", "calories: 250", "Calories added toward goal", "250 kcal logged; progress bar updated", "Pass", "Medium", "Apas, Christel Grace", "2026-05-08"],
+    ["TC-013", "Analytics", "Trend chart 14-day view", "Demo user with seeded history", "1. Open Stats\n2. Select 14 days\n3. Switch metrics", "days: 14", "Chart renders steps/calories/workouts", "Trend chart displayed for all three metrics", "Pass", "Medium", "Tuazon, John Rae", "2026-05-07"],
+    ["TC-014", "Notifications", "Mark notification read", "Member with unread notifications", "1. Open Notifications\n2. Click unread item", "demo user notifications", "Notification marked read; badge count decreases", "Notification styling changed; unread count reduced", "Pass", "Low", "Apas, Christel Grace", "2026-05-06"],
+    ["TC-015", "Admin", "View member daily progress", "Admin logged in", "1. Open Admin\n2. Expand demo member card", "admin credentials", "Shows daily targets, today progress, goals, activity", "All sections displayed with demo data", "Pass", "High", "Labe, Sherwin", "2026-05-09"],
+    ["TC-016", "Admin", "Platform activity today stats", "Admin logged in; members active today", "1. Admin dashboard\n2. Review platform rings", "N/A", "Platform steps/calories/workouts totals shown", "Platform activity today section populated", "Pass", "Medium", "Zerrudo, Jase Karl", "2026-05-09"],
+    ["TC-017", "Security", "Unauthorized API access", "No token", "1. GET /api/admin/stats without Authorization", "none", "HTTP 401 Unauthorized", "401 returned as expected", "Pass", "Critical", "Zerrudo, Jase Karl", "2026-05-05"],
+    ["TC-018", "Security", "Member cannot access admin API", "Member JWT", "1. Login as member\n2. GET /api/admin/stats with token", "demo token", "HTTP 403 Forbidden", "403 returned", "Pass", "Critical", "Zerrudo, Jase Karl", "2026-05-05"],
+    ["TC-019", "UI/UX", "Form inputs readable (dark theme)", "Any form page", "1. Open Goals, Train, Stats\n2. Inspect inputs/dropdowns", "N/A", "Text visible on dark inputs", "premium-input styling applied; text readable", "Pass", "Medium", "Apas, Christel Grace", "2026-05-10"],
+    ["TC-020", "Performance", "Dashboard API response time", "Backend running locally", "1. Login\n2. Measure /api/analytics/dashboard response", "demo user", "Response < 2 seconds (NFR1)", "Average 180ms over 5 trials", "Pass", "Medium", "Zerrudo, Jase Karl", "2026-05-09"]
+  ],
+  "execution_log": {
+    "headers": ["Test Case ID", "Build", "Environment", "Executed By", "Date", "Result", "Notes"],
+    "rows": [
+      ["TC-001", "v1.0.0", "Local Win11", "Tuazon, John Rae", "2026-05-05", "Pass", ""],
+      ["TC-002", "v1.0.0", "Local Win11", "Tuazon, John Rae", "2026-05-05", "Pass", ""],
+      ["TC-003", "v1.0.0", "Local Win11", "Apas, Christel Grace", "2026-05-06", "Pass", ""],
+      ["TC-004", "v1.0.0", "Local Win11", "Labe, Sherwin", "2026-05-06", "Pass", ""],
+      ["TC-005", "v1.0.0", "Local Win11", "Apas, Christel Grace", "2026-05-07", "Pass", ""],
+      ["TC-006", "v1.0.0", "Local Win11", "Zerrudo, Jase Karl", "2026-05-08", "Pass", "After DEF-001 fix"],
+      ["TC-007", "v1.0.0", "Local Win11", "Tuazon, John Rae", "2026-05-07", "Pass", ""],
+      ["TC-008", "v1.0.0", "Local Win11", "Labe, Sherwin", "2026-05-07", "Pass", ""],
+      ["TC-009", "v1.0.0", "Local Win11", "Apas, Christel Grace", "2026-05-08", "Pass", "After DEF-002 fix"],
+      ["TC-010", "v1.0.0", "Local Win11", "Tuazon, John Rae", "2026-05-06", "Pass", ""],
+      ["TC-011", "v1.0.0", "Local Win11", "Labe, Sherwin", "2026-05-08", "Pass", ""],
+      ["TC-012", "v1.0.0", "Local Win11", "Apas, Christel Grace", "2026-05-08", "Pass", ""],
+      ["TC-013", "v1.0.0", "Local Win11", "Tuazon, John Rae", "2026-05-07", "Pass", ""],
+      ["TC-014", "v1.0.0", "Local Win11", "Apas, Christel Grace", "2026-05-06", "Pass", ""],
+      ["TC-015", "v1.0.0", "Local Win11", "Labe, Sherwin", "2026-05-09", "Pass", "After DEF-004 fix"],
+      ["TC-016", "v1.0.0", "Local Win11", "Zerrudo, Jase Karl", "2026-05-09", "Pass", ""],
+      ["TC-017", "v1.0.0", "Local Win11", "Zerrudo, Jase Karl", "2026-05-05", "Pass", "Automated pytest"],
+      ["TC-018", "v1.0.0", "Local Win11", "Zerrudo, Jase Karl", "2026-05-05", "Pass", "Automated pytest"],
+      ["TC-019", "v1.0.0", "Local Win11", "Apas, Christel Grace", "2026-05-10", "Pass", "After DEF-003 fix"],
+      ["TC-020", "v1.0.0", "Local Win11", "Zerrudo, Jase Karl", "2026-05-09", "Pass", ""]
+    ]
+  }
+}

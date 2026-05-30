@@ -8,7 +8,7 @@ from app.database import get_db
 from app.deps import CurrentUser
 from app.models import ActivityLog, ActivityType
 from app.schemas import ActivityCreate, ActivityOut, ActivityUpdate, StepsSync
-from app.services import activity_out, build_activity
+from app.services import activity_out, build_activity, check_and_notify_goal_achievements
 
 router = APIRouter(prefix="/activities", tags=["activities"])
 
@@ -47,6 +47,7 @@ def create_activity(body: ActivityCreate, user: CurrentUser, db: Session = Depen
     )
     db.commit()
     db.refresh(row)
+    check_and_notify_goal_achievements(db, user.id)
     return activity_out(row)
 
 
@@ -75,6 +76,7 @@ def sync_steps(body: StepsSync, user: CurrentUser, db: Session = Depends(get_db)
         existing.title = f"{steps:,} steps today"
         db.commit()
         db.refresh(existing)
+        check_and_notify_goal_achievements(db, user.id)
         return activity_out(existing)
 
     logged_at = datetime.now(timezone.utc)
@@ -92,6 +94,7 @@ def sync_steps(body: StepsSync, user: CurrentUser, db: Session = Depends(get_db)
     )
     db.commit()
     db.refresh(row)
+    check_and_notify_goal_achievements(db, user.id)
     return activity_out(row)
 
 

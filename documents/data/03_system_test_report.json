@@ -1,0 +1,103 @@
+{
+  "title": "System Test Report — (S)TeemBang",
+  "identifier": "GP4-SB-STR-001",
+  "sections": [
+    {
+      "heading": "1. Introduction",
+      "paragraphs": [
+        "This System Test Report documents end-to-end validation of the complete (S)TeemBang fitness tracking application against functional requirements FR1–FR8 defined in the SDLC scope document. System testing was performed by the development test group (Group 4) in a local integrated environment (Vue frontend + FastAPI backend + SQLite)."
+      ]
+    },
+    {
+      "heading": "2. System Test Scope",
+      "bullets": [
+        "FR1: Secure user registration and authentication (JWT)",
+        "FR2: Workout logging with categories and calorie estimates",
+        "FR3: Daily step tracking (manual sync and simulation)",
+        "FR4: Calorie calculation using MET-based algorithms",
+        "FR5: Fitness goals (daily, weekly, monthly) with progress",
+        "FR6: Analytics dashboard and trend charts",
+        "FR7: Historical activity logs persisted in database",
+        "FR8: Notifications and reminders"
+      ]
+    },
+    {
+      "heading": "3. Test Environment",
+      "table": {
+        "headers": ["Component", "Details"],
+        "rows": [
+          ["OS", "Windows 11 Pro"],
+          ["Browser", "Google Chrome 136, Microsoft Edge 136"],
+          ["Frontend", "Vue 3.5 + Vite 8 — http://localhost:5173"],
+          ["Backend", "FastAPI + Uvicorn — http://127.0.0.1:8000"],
+          ["Database", "SQLite steambang.db with seeded demo data"],
+          ["Automation", "PyTest 9.x — tests/test_api.py"]
+        ]
+      }
+    },
+    {
+      "heading": "4. Functional Test Results",
+      "table": {
+        "headers": ["Req ID", "Requirement", "Test Cases", "Result"],
+        "rows": [
+          ["FR1", "Secure registration and authentication", "TC-001–TC-004, TC-017–TC-018", "Pass"],
+          ["FR2", "Log and categorize workouts", "TC-008, TC-011", "Pass"],
+          ["FR3", "Track daily steps", "TC-007, TC-009", "Pass"],
+          ["FR4", "Calculate calories burned", "TC-008, TC-012", "Pass"],
+          ["FR5", "Define and monitor goals", "TC-010–TC-012", "Pass"],
+          ["FR6", "Analytics and visual reports", "TC-013, TC-007", "Pass"],
+          ["FR7", "Store historical activity logs", "TC-008, TC-009", "Pass"],
+          ["FR8", "Notifications and reminders", "TC-014", "Pass"]
+        ]
+      }
+    },
+    {
+      "heading": "5. Non-Functional Test Results",
+      "paragraphs": ["At least two non-functional categories were evaluated as required."],
+      "table": {
+        "headers": ["Category", "Method", "Criteria", "Result"],
+        "rows": [
+          ["Performance", "Manual timing of dashboard API", "NFR1: response < 2s", "Pass — avg 180ms (TC-020)"],
+          ["Security", "JWT validation, role checks, pytest", "Unauthorized requests rejected", "Pass — TC-017, TC-018, test_admin_stats"],
+          ["Usability", "Heuristic review of dark-theme forms", "Readable inputs, mobile bottom nav", "Pass — TC-019 after DEF-003 fix"],
+          ["Compatibility", "Chrome and Edge on Windows", "Core flows functional", "Pass — all TCs on both browsers"]
+        ]
+      }
+    },
+    {
+      "heading": "6. Automated Test Evidence",
+      "paragraphs": [
+        "PyTest integration suite (tests/test_api.py) executed May 13, 2026:",
+        "• test_health — PASSED",
+        "• test_register_login_dashboard — PASSED",
+        "• test_demo_user_seeded — PASSED",
+        "• test_admin_stats — PASSED",
+        "Outcome: 4/4 automated tests passed (100%)."
+      ]
+    },
+    {
+      "heading": "7. Defects Identified During System Testing",
+      "table": {
+        "headers": ["Defect ID", "Severity", "Summary", "Status"],
+        "rows": [
+          ["DEF-001", "High", "Profile photo not displaying after upload", "Closed"],
+          ["DEF-002", "Medium", "Pedometer required device sensors on desktop", "Closed"],
+          ["DEF-003", "Medium", "White-on-white form inputs on Goals/Train/Stats", "Closed"],
+          ["DEF-004", "Medium", "Admin missing member daily target progress", "Closed"]
+        ]
+      }
+    },
+    {
+      "heading": "8. Overall Assessment",
+      "paragraphs": [
+        "Total system test cases executed: 20. Passed: 20. Failed: 0. Pass rate: 100%.",
+        "All functional requirements FR1–FR8 are satisfied in the integrated system. Non-functional criteria for performance and security are met under local test conditions.",
+        "Recommendation: Proceed to User Acceptance Testing (UAT)."
+      ]
+    }
+  ],
+  "automated_evidence": {
+    "tests": ["test_health", "test_register_login_dashboard", "test_demo_user_seeded", "test_admin_stats"],
+    "outcome": "4/4 passed"
+  }
+}

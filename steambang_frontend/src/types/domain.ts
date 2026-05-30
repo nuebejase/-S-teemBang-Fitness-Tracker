@@ -13,6 +13,10 @@ export interface Profile {
   age: number | null
   fitnessLevel: string
   dailyStepTarget: number
+  dailyCalorieTarget: number
+  dailyWorkoutTarget: number
+  avatarUrl: string | null
+  isComplete: boolean
 }
 
 export interface Activity {
@@ -71,4 +75,30 @@ export interface AdminStats {
   totalActivities: number
   totalGoals: number
   activeMembers: number
+  todayPlatformSteps: number
+  todayPlatformCalories: number
+  todayPlatformWorkouts: number
+  profilesComplete: number
+}
+
+export interface AdminUser {
+  id: string
+  name: string
+  email: string
+  role: string
+  avatarUrl: string | null
+  fitnessLevel: string | null
+  profileComplete: boolean
+  dailyStepTarget: number
+  dailyCalorieTarget: number
+  dailyWorkoutTarget: number
+  todaySteps: number
+  todayCalories: number
+  todayWorkouts: number
+  streakDays: number
+  totalActivities: number
+  totalGoals: number
+  lastActive: string | null
+  activeGoals: Goal[]
+  recentActivities: Activity[]
 }

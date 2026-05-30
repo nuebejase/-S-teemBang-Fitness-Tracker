@@ -5,10 +5,15 @@ import Card from '@/components/ui/Card.vue'
 import { useAppStore } from '@/stores/appStore'
 import { formatDateTime } from '@/lib/utils'
 import { toast } from 'vue-sonner'
+import { Trophy, Bell } from 'lucide-vue-next'
 
 const store = useAppStore()
 const title = ref('')
 const body = ref('')
+
+function displayBody(text: string) {
+  return text.replace(/^goal:\d+:\d{4}-\d{2}-\d{2}\n?/, '')
+}
 
 async function markAll() {
   await store.markAllRead()
@@ -49,12 +54,18 @@ async function addReminder() {
         v-for="n in store.notifications"
         :key="n.id"
         class="p-4 cursor-pointer"
-        :class="!n.isRead ? 'border-emerald-300 bg-emerald-50/50' : ''"
+        :class="!n.isRead ? (n.kind === 'achievement' ? 'border-amber-400/50 bg-amber-500/10' : 'border-emerald-400/40 bg-emerald-500/10') : ''"
         @click="markOne(n.id)"
       >
-        <p class="font-medium">{{ n.title }}</p>
-        <p class="text-sm text-muted-foreground mt-1">{{ n.body }}</p>
-        <p class="text-xs text-muted-foreground mt-2">{{ formatDateTime(n.createdAt) }}</p>
+        <div class="flex items-start gap-2">
+          <Trophy v-if="n.kind === 'achievement'" class="w-5 h-5 text-amber-400 shrink-0 mt-0.5" />
+          <Bell v-else class="w-5 h-5 text-emerald-400 shrink-0 mt-0.5" />
+          <div class="flex-1 min-w-0">
+            <p class="font-medium">{{ n.title }}</p>
+            <p class="text-sm text-muted-foreground mt-1">{{ displayBody(n.body) }}</p>
+            <p class="text-xs text-muted-foreground mt-2">{{ formatDateTime(n.createdAt) }}</p>
+          </div>
+        </div>
       </Card>
     </div>
   </div>

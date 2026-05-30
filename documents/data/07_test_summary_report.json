@@ -1,0 +1,113 @@
+{
+  "title": "Test Summary Report — (S)TeemBang",
+  "identifier": "GP4-SB-TSR-001",
+  "sections": [
+    {
+      "heading": "1. Executive Summary",
+      "paragraphs": [
+        "This Test Summary Report provides an overall assessment of testing activities for the (S)TeemBang fitness tracking application (Group 4, SDLC Capstone). Testing spanned unit/integration, system, UAT, and regression phases from May 5 to May 15, 2026.",
+        "Overall result: The application meets defined functional and non-functional requirements. Testing is complete with formal sign-off recommended."
+      ]
+    },
+    {
+      "heading": "2. Project Overview",
+      "table": {
+        "headers": ["Attribute", "Value"],
+        "rows": [
+          ["Project", "(S)TeemBang — Fitness Tracking Application"],
+          ["Team", "Group 4"],
+          ["Tech Stack", "Vue 3 + Vite, FastAPI, SQLite, JWT"],
+          ["Test Period", "May 5 – May 15, 2026"],
+          ["Final Build", "v1.0.0-build6"]
+        ]
+      }
+    },
+    {
+      "heading": "3. Testing Phases Summary",
+      "table": {
+        "headers": ["Phase", "Document", "Cases/Scenarios", "Passed", "Failed", "Pass Rate"],
+        "rows": [
+          ["Test Planning", "Test Plan (Doc 1)", "—", "—", "—", "Approved"],
+          ["Test Design", "Test Cases (Doc 2)", "20", "20", "0", "100%"],
+          ["System Test", "System Test Report (Doc 5)", "20", "20", "0", "100%"],
+          ["UAT", "UAT Plan & Report (Doc 6)", "9", "9", "0", "100%"],
+          ["Regression", "Regression Report (Doc 8)", "10", "10", "0", "100%"],
+          ["Automation", "PyTest test_api.py", "4", "4", "0", "100%"]
+        ]
+      }
+    },
+    {
+      "heading": "4. Defect Summary",
+      "table": {
+        "headers": ["Severity", "Found", "Closed", "Open", "Deferred"],
+        "rows": [
+          ["Critical", "0", "0", "0", "0"],
+          ["High", "1", "1", "0", "0"],
+          ["Medium", "4", "4", "0", "0"],
+          ["Low", "3", "1", "2", "2"],
+          ["Total", "8", "6", "2", "2"]
+        ]
+      },
+      "paragraphs": [
+        "Open defects (DEF-005, DEF-006) are Low severity and deferred to v1.1 with product owner approval."
+      ]
+    },
+    {
+      "heading": "5. Requirements Coverage",
+      "table": {
+        "headers": ["Requirement", "Description", "Test Coverage", "Status"],
+        "rows": [
+          ["FR1", "Secure auth", "TC-001–004, TC-017–018", "Verified"],
+          ["FR2", "Workout logging", "TC-008, TC-011", "Verified"],
+          ["FR3", "Step tracking", "TC-007, TC-009", "Verified"],
+          ["FR4", "Calorie calculation", "TC-008, TC-012", "Verified"],
+          ["FR5", "Goals", "TC-010–012", "Verified"],
+          ["FR6", "Analytics", "TC-013", "Verified"],
+          ["FR7", "Activity history", "TC-008, TC-009", "Verified"],
+          ["FR8", "Notifications", "TC-014", "Verified"],
+          ["NFR1", "Performance < 2s", "TC-020", "Verified"],
+          ["NFR2", "Security / RBAC", "TC-017–018", "Verified"]
+        ]
+      }
+    },
+    {
+      "heading": "6. Test Metrics",
+      "bullets": [
+        "Total test cases designed: 20",
+        "Total test cases executed: 20",
+        "UAT scenarios: 9 (100% pass)",
+        "Regression cases: 10 (100% pass)",
+        "Automated tests: 4 (100% pass)",
+        "Defect density: 8 defects / 20 test cases = 0.4 per case",
+        "Defect closure rate: 75% (6/8 closed; 2 deferred)"
+      ]
+    },
+    {
+      "heading": "7. Risks & Mitigations",
+      "table": {
+        "headers": ["Risk", "Impact", "Mitigation"],
+        "rows": [
+          ["Desktop-only step simulation", "Low", "Capacitor mobile build planned for v1.1"],
+          ["SQLite not production-scale", "Medium", "Document migration path to PostgreSQL"],
+          ["Two open Low defects", "Low", "Deferred; no blocker for MVP delivery"]
+        ]
+      }
+    },
+    {
+      "heading": "8. Conclusion & Recommendation",
+      "paragraphs": [
+        "All Critical and High severity defects have been resolved. System, UAT, and regression testing achieved 100% pass rates. The application satisfies FR1–FR8 and key non-functional requirements.",
+        "Recommendation: Approve (S)TeemBang v1.0.0 for final project submission and demonstration."
+      ]
+    }
+  ],
+  "signoff": {
+    "headers": ["Role", "Name", "Signature", "Date"],
+    "rows": [
+      ["Test Lead", "Tuazon, John Rae", "Approved (electronic)", "2026-05-15"],
+      ["Developer Lead", "Zerrudo, Jase Karl", "Approved (electronic)", "2026-05-15"],
+      ["Project Manager", "Labe, Sherwin", "Approved (electronic)", "2026-05-15"],
+      ["QA Analyst", "Apas, Christel Grace", "Approved (electronic)", "2026-05-15"]
+    ]
+  }
+}

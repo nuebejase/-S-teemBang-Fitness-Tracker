@@ -1,0 +1,175 @@
+{
+  "title": "UAT Plan & Report — (S)TeemBang",
+  "identifier": "GP4-SB-UAT-001",
+  "sections": [
+    {
+      "heading": "Part A — UAT Plan",
+      "paragraphs": [
+        "This document defines the User Acceptance Testing (UAT) plan for (S)TeemBang and records execution results. UAT validates that the system meets business and user needs from the perspective of representative end users and the product owner."
+      ]
+    },
+    {
+      "heading": "A.1 UAT Objectives",
+      "bullets": [
+        "Confirm core fitness workflows are intuitive for non-technical users",
+        "Validate daily goal tracking (steps, calories, workouts) matches user expectations",
+        "Verify admin can monitor member activity and platform statistics",
+        "Obtain formal sign-off before project delivery"
+      ]
+    },
+    {
+      "heading": "A.2 UAT Participants",
+      "table": {
+        "headers": ["Role", "Name", "Responsibility"],
+        "rows": [
+          ["Product Owner / Instructor", "Course Instructor (SDLC)", "Approve acceptance criteria"],
+          ["End User Representative", "Demo Member (simulated)", "Execute member scenarios"],
+          ["Admin Representative", "Group 4 QA Lead", "Execute admin scenarios"],
+          ["Facilitator", "Tuazon, John Rae", "Schedule sessions, collect feedback"],
+          ["Scribe", "Apas, Christel Grace", "Record results and issues"]
+        ]
+      }
+    },
+    {
+      "heading": "A.3 UAT Scope",
+      "bullets": [
+        "In scope: Registration, login, profile setup, avatar upload, dashboard rings, workout timer, step simulation, goal creation/tracking, analytics, notifications, admin console",
+        "Out of scope: Capacitor native build, production deployment, third-party wearable integration"
+      ]
+    },
+    {
+      "heading": "A.4 UAT Schedule",
+      "table": {
+        "headers": ["Phase", "Dates", "Activities"],
+        "rows": [
+          ["Preparation", "May 11–12, 2026", "Environment setup, UAT script review"],
+          ["Execution — Member flows", "May 13, 2026", "Scenarios UAT-01 to UAT-06"],
+          ["Execution — Admin flows", "May 14, 2026", "Scenarios UAT-07 to UAT-09"],
+          ["Review & sign-off", "May 15, 2026", "Consolidate results, obtain approval"]
+        ]
+      }
+    },
+    {
+      "heading": "A.5 UAT Entry Criteria",
+      "bullets": [
+        "System testing completed with 100% pass rate",
+        "All Critical/High defects closed or deferred with approval",
+        "Demo accounts available (demo@steambang.com, admin@steambang.com)",
+        "Test environment stable and accessible"
+      ]
+    },
+    {
+      "heading": "A.6 UAT Exit Criteria",
+      "bullets": [
+        "All UAT scenarios executed",
+        "No open Critical defects",
+        "≥ 90% UAT scenarios passed",
+        "Product owner sign-off obtained"
+      ]
+    },
+    {
+      "heading": "A.7 Acceptance Criteria (Business)",
+      "paragraphs": [
+        "The following business acceptance criteria must be satisfied for UAT sign-off. Each criterion maps to one or more UAT scenarios executed during May 13–14, 2026."
+      ],
+      "table": {
+        "headers": ["ID", "Acceptance Criterion", "UAT Scenario"],
+        "rows": [
+          ["AC-01", "A new user can register, set profile details, and define daily targets for steps, calories, and workouts", "UAT-01"],
+          ["AC-02", "A member can log a timed workout and see updated calories and workout count on the dashboard", "UAT-02"],
+          ["AC-03", "A member can track steps via simulation on desktop and sync to the server", "UAT-03"],
+          ["AC-04", "Goals show accurate progress bars after logging activities", "UAT-04"],
+          ["AC-05", "Analytics page displays trend data for at least 7 days", "UAT-05"],
+          ["AC-06", "Profile photo upload displays correctly on profile and home dashboard", "UAT-06"],
+          ["AC-07", "Admin can view aggregate platform activity for the current day", "UAT-07"],
+          ["AC-08", "Admin can inspect individual member daily progress against targets", "UAT-08"],
+          ["AC-09", "Notifications can be read and unread count updates", "UAT-09"]
+        ]
+      }
+    },
+    {
+      "heading": "A.8 UAT Environment Checklist",
+      "table": {
+        "headers": ["Check", "Status", "Verified By"],
+        "rows": [
+          ["Backend running on http://127.0.0.1:8000", "OK", "Tuazon, John Rae"],
+          ["Frontend running on http://localhost:5173", "OK", "Tuazon, John Rae"],
+          ["Demo member account accessible", "OK", "Apas, Christel Grace"],
+          ["Admin account accessible", "OK", "Labe, Sherwin"],
+          ["Database seeded with sample history", "OK", "Zerrudo, Jase Karl"],
+          ["UAT scripts printed and distributed", "OK", "Apas, Christel Grace"]
+        ]
+      }
+    },
+    {
+      "heading": "Part B — UAT Scenarios & Results",
+      "paragraphs": ["Each scenario was executed by a group member acting as an end user on May 13–14, 2026."]
+    },
+    {
+      "heading": "B.1 UAT Scenario Results",
+      "table": {
+        "headers": ["Scenario ID", "Description", "User Role", "Result", "Comments"],
+        "rows": [
+          ["UAT-01", "New user registers and completes profile with daily targets", "Member", "Pass", "Smooth onboarding; targets saved correctly"],
+          ["UAT-02", "Member logs workout using timer and sees dashboard update", "Member", "Pass", "Workout count and calories reflected immediately"],
+          ["UAT-03", "Member simulates walk and syncs steps to daily goal", "Member", "Pass", "Simulation works on desktop without phone sensors"],
+          ["UAT-04", "Member creates weekly steps goal and tracks progress", "Member", "Pass", "Progress bar updates after sync"],
+          ["UAT-05", "Member views 14-day analytics trend chart", "Member", "Pass", "Chart readable; metric switch works"],
+          ["UAT-06", "Member uploads profile photo and sees it on dashboard", "Member", "Pass", "Photo visible after URL fix"],
+          ["UAT-07", "Admin views platform activity and member list", "Admin", "Pass", "Platform rings and user cards load"],
+          ["UAT-08", "Admin expands member detail with daily progress", "Admin", "Pass", "Steps/calories/workouts targets shown"],
+          ["UAT-09", "Member receives and marks notification as read", "Member", "Pass", "Badge count decreases"]
+        ]
+      }
+    },
+    {
+      "heading": "B.2 Detailed Scenario Steps",
+      "paragraphs": [
+        "UAT-01 — Registration and profile setup: (1) Navigate to /register. (2) Enter full name, unique email, password ≥8 chars. (3) Submit and confirm redirect to Profile. (4) Enter height 170 cm, weight 68 kg, age 22, fitness level Beginner. (5) Set daily targets: 10,000 steps, 500 kcal, 1 workout. (6) Save and verify view mode displays all values.",
+        "UAT-02 — Workout timer: (1) Login as demo@steambang.com. (2) Open Train page, select Timer mode. (3) Choose category Running, start timer for 60 seconds. (4) Stop and save workout. (5) Return to Dashboard and confirm workouts ring and calorie total increased.",
+        "UAT-03 — Step simulation: (1) On Dashboard click Simulate walk. (2) Wait 10 seconds. (3) Stop simulation and click Sync steps. (4) Confirm success toast and updated step count on dashboard ring.",
+        "UAT-04 — Weekly goal: (1) Open Goals, create new goal — metric Steps, period Weekly, target 50,000. (2) Sync steps from dashboard. (3) Open Goals and confirm progress percentage updated.",
+        "UAT-05 — Analytics: (1) Open Stats page. (2) Select 14-day range. (3) Toggle between Steps, Calories, and Workouts metrics. (4) Confirm chart renders without errors.",
+        "UAT-06 — Avatar upload: (1) Profile → Edit mode. (2) Click camera icon, select JPEG under 2 MB. (3) Save profile. (4) Verify avatar on Profile and Dashboard header.",
+        "UAT-07 — Admin overview: (1) Login as admin@steambang.com. (2) Confirm redirect to Admin console. (3) Review platform activity rings and member list.",
+        "UAT-08 — Admin member detail: (1) Expand demo member card. (2) Verify daily targets, today's progress bars, active goals, and recent activity feed.",
+        "UAT-09 — Notifications: (1) Login as member with unread notifications. (2) Open notification panel. (3) Tap unread item. (4) Confirm badge count decreases."
+      ]
+    },
+    {
+      "heading": "B.3 User Feedback Summary",
+      "bullets": [
+        "Positive: Dark premium UI, clear daily goal rings on home page, intuitive bottom navigation",
+        "Positive: Metric-specific goal tracking (simulate steps, timer for workouts, manual calories)",
+        "Suggestion: Add push notifications on mobile (future Capacitor release)",
+        "Suggestion: Export analytics to PDF (deferred to future sprint)"
+      ]
+    },
+    {
+      "heading": "B.4 UAT Defects",
+      "table": {
+        "headers": ["Defect ID", "Severity", "Description", "Status"],
+        "rows": [
+          ["DEF-005", "Low", "Analytics chart legend text slightly small on mobile", "Open — deferred to v1.1"],
+          ["DEF-006", "Low", "No confirmation dialog before deleting goal", "Open — accepted for MVP"]
+        ]
+      }
+    },
+    {
+      "heading": "Part C — UAT Conclusion & Sign-Off",
+      "paragraphs": [
+        "UAT Summary: 9 scenarios executed. Passed: 9. Failed: 0. Pass rate: 100%.",
+        "Two Low-severity items deferred with product owner acknowledgment. No Critical or High defects remain open.",
+        "The (S)TeemBang application is accepted for delivery as Group 4's SDLC capstone project."
+      ]
+    }
+  ],
+  "signoff": {
+    "headers": ["Role", "Name", "Signature", "Date"],
+    "rows": [
+      ["QA Lead", "Tuazon, John Rae", "Approved (electronic)", "2026-05-15"],
+      ["Developer Lead", "Zerrudo, Jase Karl", "Approved (electronic)", "2026-05-15"],
+      ["Product Owner", "Course Instructor", "Approved (electronic)", "2026-05-15"]
+    ]
+  }
+}

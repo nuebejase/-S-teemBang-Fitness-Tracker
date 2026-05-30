@@ -2,6 +2,7 @@ import { STORAGE_KEYS } from '@/constants/storage'
 import type {
   Activity,
   AdminStats,
+  AdminUser,
   Dashboard,
   Goal,
   Notification,
@@ -74,6 +75,10 @@ function mapProfile(p: {
   age: number | null
   fitness_level: string
   daily_step_target: number
+  daily_calorie_target?: number
+  daily_workout_target?: number
+  avatar_url?: string | null
+  is_complete?: boolean
 }): Profile {
   return {
     heightCm: p.height_cm,
@@ -81,6 +86,10 @@ function mapProfile(p: {
     age: p.age,
     fitnessLevel: p.fitness_level,
     dailyStepTarget: p.daily_step_target,
+    dailyCalorieTarget: p.daily_calorie_target ?? 500,
+    dailyWorkoutTarget: p.daily_workout_target ?? 1,
+    avatarUrl: p.avatar_url ?? null,
+    isComplete: p.is_complete ?? false,
   }
 }
 
@@ -205,8 +214,26 @@ export async function updateProfileApi(payload: Partial<{
   age: number
   fitness_level: string
   daily_step_target: number
+  daily_calorie_target: number
+  daily_workout_target: number
 }>): Promise<Profile> {
   return mapProfile(await apiJson('/api/auth/profile', { method: 'PATCH', body: JSON.stringify(payload) }))
+}
+
+export async function uploadAvatarApi(file: File): Promise<Profile> {
+  const url = `${API_BASE}/api/auth/profile/avatar`
+  const headers = new Headers()
+  const token = localStorage.getItem(STORAGE_KEYS.accessToken)
+  if (token) headers.set('Authorization', `Bearer ${token}`)
+  const res = await fetch(url, { method: 'POST', headers, body: (() => {
+    const fd = new FormData()
+    fd.append('file', file)
+    return fd
+  })() })
+  const text = await res.text()
+  const data = text ? JSON.parse(text) : null
+  if (!res.ok) throw new Error(formatError(res, data))
+  return mapProfile(data)
 }
 
 /* --- activities --- */
@@ -244,6 +271,13 @@ export async function createGoalApi(body: {
   target_value: number
 }): Promise<Goal> {
   return mapGoal(await apiJson('/api/goals', { method: 'POST', body: JSON.stringify(body) }))
+}
+
+export async function updateGoalApi(
+  id: string,
+  body: { target_value?: number; is_active?: boolean },
+): Promise<Goal> {
+  return mapGoal(await apiJson(`/api/goals/${id}`, { method: 'PATCH', body: JSON.stringify(body) }))
 }
 
 export async function deleteGoalApi(id: string): Promise<void> {
@@ -300,13 +334,78 @@ export async function fetchAdminStatsApi(): Promise<AdminStats> {
     total_activities: number
     total_goals: number
     active_members: number
+    today_platform_steps: number
+    today_platform_calories: number
+    today_platform_workouts: number
+    profiles_complete: number
   }>('/api/admin/stats')
   return {
     totalUsers: s.total_users,
     totalActivities: s.total_activities,
     totalGoals: s.total_goals,
     activeMembers: s.active_members,
+    todayPlatformSteps: s.today_platform_steps,
+    todayPlatformCalories: s.today_platform_calories,
+    todayPlatformWorkouts: s.today_platform_workouts,
+    profilesComplete: s.profiles_complete,
   }
+}
+
+export async function fetchAdminUsersApi(): Promise<AdminUser[]> {
+  const rows = await apiJson<
+    {
+      id: string
+      name: string
+      email: string
+      role: string
+      avatar_url: string | null
+      fitness_level: string | null
+      profile_complete: boolean
+      daily_step_target: number
+      daily_calorie_target: number
+      daily_workout_target: number
+      today_steps: number
+      today_calories: number
+      today_workouts: number
+      streak_days: number
+      total_activities: number
+      total_goals: number
+      last_active: string | null
+      active_goals: {
+        id: string
+        metric: string
+        period: string
+        target_value: number
+        start_date: string
+        end_date: string | null
+        is_active: boolean
+        current_value: number
+        progress_percent: number
+      }[]
+      recent_activities: Parameters<typeof mapActivity>[0][]
+    }[]
+  >('/api/admin/users/overview')
+  return rows.map((u) => ({
+    id: u.id,
+    name: u.name,
+    email: u.email,
+    role: u.role,
+    avatarUrl: u.avatar_url,
+    fitnessLevel: u.fitness_level,
+    profileComplete: u.profile_complete,
+    dailyStepTarget: u.daily_step_target,
+    dailyCalorieTarget: u.daily_calorie_target,
+    dailyWorkoutTarget: u.daily_workout_target,
+    todaySteps: u.today_steps,
+    todayCalories: u.today_calories,
+    todayWorkouts: u.today_workouts,
+    streakDays: u.streak_days,
+    totalActivities: u.total_activities,
+    totalGoals: u.total_goals,
+    lastActive: u.last_active,
+    activeGoals: u.active_goals.map(mapGoal),
+    recentActivities: u.recent_activities.map(mapActivity),
+  }))
 }
 
 export async function fetchAdminActivitiesApi(): Promise<Activity[]> {

@@ -1,8 +1,11 @@
-from fastapi import APIRouter, Depends, HTTPException, status
+from pathlib import Path
+import uuid
+
+from fastapi import APIRouter, Depends, File, HTTPException, UploadFile, status
 from sqlalchemy import select
 from sqlalchemy.orm import Session
 
-from app.database import get_db
+from app.database import AVATARS_DIR, get_db
 from app.deps import CurrentUser, DbSession
 from app.models import User, UserProfile, UserRole
 from app.schemas import ProfileOut, ProfileUpdate, TokenResponse, UserCreate, UserLogin, UserOut
@@ -10,9 +13,16 @@ from app.security import create_access_token, hash_password, verify_password
 
 router = APIRouter(prefix="/auth", tags=["auth"])
 
+ALLOWED_IMAGE_TYPES = {"image/jpeg", "image/png", "image/webp", "image/gif"}
+MAX_AVATAR_BYTES = 2 * 1024 * 1024
+
 
 def _user_out(user: User) -> UserOut:
     return UserOut(id=str(user.id), name=user.name, email=user.email, role=user.role.value)
+
+
+def _profile_complete(profile: UserProfile) -> bool:
+    return profile.height_cm is not None and profile.weight_kg is not None and profile.age is not None
 
 
 def _profile_out(profile: UserProfile) -> ProfileOut:
@@ -22,6 +32,10 @@ def _profile_out(profile: UserProfile) -> ProfileOut:
         age=profile.age,
         fitness_level=profile.fitness_level,
         daily_step_target=profile.daily_step_target,
+        daily_calorie_target=profile.daily_calorie_target,
+        daily_workout_target=profile.daily_workout_target,
+        avatar_url=profile.avatar_url,
+        is_complete=_profile_complete(profile),
     )
 
 
@@ -82,6 +96,42 @@ def update_profile(body: ProfileUpdate, user: CurrentUser, db: DbSession):
     data = body.model_dump(exclude_unset=True)
     for key, value in data.items():
         setattr(profile, key, value)
+    db.commit()
+    db.refresh(profile)
+    return _profile_out(profile)
+
+
+@router.post("/profile/avatar", response_model=ProfileOut)
+async def upload_avatar(
+    user: CurrentUser,
+    db: DbSession,
+    file: UploadFile = File(...),
+):
+    if file.content_type not in ALLOWED_IMAGE_TYPES:
+        raise HTTPException(status_code=400, detail="Image must be JPEG, PNG, WebP, or GIF")
+    raw = await file.read()
+    if len(raw) > MAX_AVATAR_BYTES:
+        raise HTTPException(status_code=400, detail="Image must be under 2 MB")
+
+    ext = {
+        "image/jpeg": ".jpg",
+        "image/png": ".png",
+        "image/webp": ".webp",
+        "image/gif": ".gif",
+    }[file.content_type]
+    AVATARS_DIR.mkdir(parents=True, exist_ok=True)
+
+    profile = _ensure_profile(db, user)
+    for candidate in AVATARS_DIR.glob(f"{user.id}_*"):
+        candidate.unlink(missing_ok=True)
+    for candidate in AVATARS_DIR.glob(f"{user.id}.*"):
+        candidate.unlink(missing_ok=True)
+
+    filename = f"{user.id}_{uuid.uuid4().hex[:8]}{ext}"
+    dest = AVATARS_DIR / filename
+    dest.write_bytes(raw)
+
+    profile.avatar_url = f"/uploads/avatars/{filename}"
     db.commit()
     db.refresh(profile)
     return _profile_out(profile)

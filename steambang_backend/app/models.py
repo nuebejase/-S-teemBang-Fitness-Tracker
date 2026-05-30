@@ -65,6 +65,9 @@ class UserProfile(Base):
     age: Mapped[int | None] = mapped_column(Integer, nullable=True)
     fitness_level: Mapped[str] = mapped_column(String(50), nullable=False, default="beginner")
     daily_step_target: Mapped[int] = mapped_column(Integer, nullable=False, default=8000)
+    daily_calorie_target: Mapped[float] = mapped_column(Float, nullable=False, default=500.0)
+    daily_workout_target: Mapped[int] = mapped_column(Integer, nullable=False, default=1)
+    avatar_url: Mapped[str | None] = mapped_column(String(512), nullable=True)
     updated_at: Mapped[datetime] = mapped_column(
         DateTime(timezone=True), server_default=func.now(), onupdate=func.now()
     )

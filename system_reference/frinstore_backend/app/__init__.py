@@ -1,1 +1,0 @@
-# FrinStore API package

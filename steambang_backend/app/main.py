@@ -2,14 +2,16 @@ from contextlib import asynccontextmanager
 
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.staticfiles import StaticFiles
 
-from app.database import Base, SessionLocal, engine
+from app.database import UPLOADS_DIR, Base, SessionLocal, engine, migrate_schema
 from app.routers import activities, admin, analytics, auth, goals, notifications
 from app.seed import seed_if_needed
 
 
 @asynccontextmanager
 async def lifespan(_: FastAPI):
+    migrate_schema()
     Base.metadata.create_all(bind=engine)
     db = SessionLocal()
     try:
@@ -33,6 +35,9 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
+UPLOADS_DIR.mkdir(parents=True, exist_ok=True)
+app.mount("/uploads", StaticFiles(directory=str(UPLOADS_DIR)), name="uploads")
 
 app.include_router(auth.router, prefix="/api")
 app.include_router(activities.router, prefix="/api")

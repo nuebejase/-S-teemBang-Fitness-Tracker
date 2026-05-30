@@ -11,8 +11,10 @@ const route = useRoute()
 const store = useAppStore()
 const email = ref('')
 const password = ref('')
+const loading = ref(false)
 
 async function submit() {
+  loading.value = true
   try {
     await store.login(email.value, password.value)
     toast.success('Welcome back!')
@@ -20,34 +22,43 @@ async function submit() {
     router.push(redirect && redirect.startsWith('/') ? redirect : store.user?.role === 'admin' ? '/admin' : '/')
   } catch {
     toast.error('Invalid email or password')
+  } finally {
+    loading.value = false
   }
 }
 </script>
 
 <template>
-  <div class="min-h-screen flex items-center justify-center bg-gradient-to-br from-emerald-100 to-teal-200 px-4 py-12">
-    <Card class="w-full max-w-md p-8">
+  <div class="min-h-screen app-shell flex items-center justify-center px-4 py-12">
+    <Card class="w-full max-w-md p-8 md:p-10">
       <div class="text-center mb-8">
-        <div class="w-16 h-16 mx-auto rounded-2xl bg-gradient-to-br from-emerald-500 to-teal-600 text-white flex items-center justify-center font-bold text-xl mb-4">SB</div>
-        <h1 class="text-2xl font-bold">Sign in</h1>
-        <p class="text-muted-foreground text-sm mt-1">(S)TeemBang fitness tracker</p>
+        <div class="w-16 h-16 mx-auto rounded-2xl bg-gradient-to-br from-emerald-500 to-teal-600 text-white flex items-center justify-center font-bold text-xl mb-5 shadow-lg btn-glow">
+          SB
+        </div>
+        <h1 class="text-2xl font-bold tracking-tight">Welcome back</h1>
+        <p class="text-muted-foreground text-sm mt-2">Sign in to your fitness dashboard</p>
       </div>
-      <form class="space-y-4" @submit.prevent="submit">
+      <form class="space-y-5" @submit.prevent="submit">
         <div>
-          <label class="text-sm font-medium" for="email">Email</label>
-          <input id="email" v-model="email" type="email" required class="mt-1 w-full px-3 py-2 rounded-lg border" />
+          <label class="premium-label" for="email">Email</label>
+          <input id="email" v-model="email" type="email" required class="premium-input mt-2" placeholder="you@example.com" />
         </div>
         <div>
-          <label class="text-sm font-medium" for="pw">Password</label>
-          <input id="pw" v-model="password" type="password" required class="mt-1 w-full px-3 py-2 rounded-lg border" />
+          <label class="premium-label" for="pw">Password</label>
+          <input id="pw" v-model="password" type="password" required class="premium-input mt-2" placeholder="••••••••" />
         </div>
-        <Button type="submit" class="w-full">Sign in</Button>
+        <Button type="submit" class="w-full" size="lg" :disabled="loading">
+          {{ loading ? 'Signing in…' : 'Sign in' }}
+        </Button>
       </form>
-      <p class="text-center text-sm mt-6 text-muted-foreground">
+      <p class="text-center text-sm mt-8 text-muted-foreground">
         No account?
-        <RouterLink to="/register" class="text-emerald-600 font-medium hover:underline">Register</RouterLink>
+        <RouterLink to="/register" class="text-emerald-400 font-medium hover:underline">Create one</RouterLink>
       </p>
-      <p class="text-xs text-center mt-4 text-muted-foreground">Demo: demo@steambang.com / demo1234</p>
+      <div class="mt-6 p-3 rounded-xl bg-white/[0.03] border border-white/[0.06] text-xs text-muted-foreground text-center space-y-1">
+        <p>Demo: demo@steambang.com / demo1234</p>
+        <p>Admin: admin@steambang.com / admin123</p>
+      </div>
     </Card>
   </div>
 </template>

@@ -1,0 +1,79 @@
+{
+  "title": "Regression Test Report — (S)TeemBang",
+  "identifier": "GP4-SB-RTR-001",
+  "sections": [
+    {
+      "heading": "1. Purpose",
+      "paragraphs": [
+        "This Regression Test Report confirms that defect fixes applied during system and UAT cycles did not break existing features. Regression testing was performed after builds v1.0.0-build3 through v1.0.0-build6."
+      ]
+    },
+    {
+      "heading": "2. Regression Scope",
+      "bullets": [
+        "Authentication (login, register, JWT persistence)",
+        "Dashboard daily goal rings (steps, calories, workouts)",
+        "Workout logging and step simulation/sync",
+        "Goal creation and metric-specific tracking",
+        "Profile view/edit and avatar upload",
+        "Admin platform stats and member detail",
+        "Automated API test suite (pytest)"
+      ]
+    },
+    {
+      "heading": "3. Build Under Test",
+      "table": {
+        "headers": ["Item", "Value"],
+        "rows": [
+          ["Build", "v1.0.0-build6 (final regression)"],
+          ["Date", "May 15, 2026"],
+          ["Environment", "Local — Windows 11, Chrome 136"],
+          ["Fixes included", "DEF-001, DEF-002, DEF-003, DEF-004, DEF-008"]
+        ]
+      }
+    },
+    {
+      "heading": "4. Regression Test Cases",
+      "table": {
+        "headers": ["Reg ID", "Related Defect", "Test Description", "Result"],
+        "rows": [
+          ["REG-001", "DEF-001", "Upload avatar → visible on profile and dashboard", "Pass"],
+          ["REG-002", "DEF-001", "Existing login/session still works after avatar fix", "Pass"],
+          ["REG-003", "DEF-002", "Simulate walk adds steps without device sensors", "Pass"],
+          ["REG-004", "DEF-002", "Manual step sync API still accepts POST", "Pass"],
+          ["REG-005", "DEF-003", "Goals form inputs readable (dark theme)", "Pass"],
+          ["REG-006", "DEF-003", "Train timer and Stats filters still functional", "Pass"],
+          ["REG-007", "DEF-004", "Admin member card shows daily targets and progress", "Pass"],
+          ["REG-008", "DEF-004", "Admin platform activity totals unchanged", "Pass"],
+          ["REG-009", "DEF-008", "Fresh database seed and migration succeeds", "Pass"],
+          ["REG-010", "—", "PyTest suite: 4/4 tests pass", "Pass"]
+        ]
+      }
+    },
+    {
+      "heading": "5. Automated Regression",
+      "paragraphs": [
+        "Command: python -m pytest tests/test_api.py -v",
+        "Results (May 15, 2026):",
+        "• test_health — PASSED",
+        "• test_register_login_dashboard — PASSED",
+        "• test_demo_user_seeded — PASSED",
+        "• test_admin_stats — PASSED",
+        "No regressions detected in automated suite."
+      ]
+    },
+    {
+      "heading": "6. New Defects Found During Regression",
+      "paragraphs": [
+        "No new defects were introduced by the fix builds. All 10 regression test cases passed."
+      ]
+    },
+    {
+      "heading": "7. Conclusion",
+      "paragraphs": [
+        "Regression testing completed successfully. All previously working features remain functional after defect fixes.",
+        "Recommendation: Release build v1.0.0-build6 for final delivery."
+      ]
+    }
+  ]
+}

@@ -4,7 +4,17 @@ from sqlalchemy import func, select
 from sqlalchemy.orm import Session
 
 from app.fitness import estimate_steps_calories, estimate_workout_calories
-from app.models import ActivityLog, ActivityType, FitnessGoal, GoalMetric, GoalPeriod, User, UserProfile
+from app.models import (
+    ActivityLog,
+    ActivityType,
+    FitnessGoal,
+    GoalMetric,
+    GoalPeriod,
+    Notification,
+    NotificationKind,
+    User,
+    UserProfile,
+)
 from app.schemas import ActivityOut, GoalOut, TrendPoint
 
 
@@ -145,6 +155,58 @@ def compute_streak(db: Session, user_id: int) -> int:
         streak += 1
         d -= timedelta(days=1)
     return streak
+
+
+def goal_achievement_key(goal_id: int, period: GoalPeriod, ref: date | None = None) -> str:
+    start, _ = period_bounds(period, ref)
+    return f"goal:{goal_id}:{start.isoformat()}"
+
+
+def check_and_notify_goal_achievements(db: Session, user_id: int) -> list[Notification]:
+    """Create achievement notifications when active goals reach 100% (once per period)."""
+    today = datetime.now(timezone.utc).date()
+    goals = db.scalars(
+        select(FitnessGoal).where(
+            FitnessGoal.user_id == user_id,
+            FitnessGoal.is_active.is_(True),
+        )
+    ).all()
+
+    created: list[Notification] = []
+    for goal in goals:
+        prog = goal_progress(db, goal)
+        if prog.progress_percent < 100:
+            continue
+
+        key = goal_achievement_key(goal.id, goal.period, today)
+        already = db.scalar(
+            select(Notification).where(
+                Notification.user_id == user_id,
+                Notification.kind == NotificationKind.achievement,
+                Notification.body.contains(key),
+            )
+        )
+        if already:
+            continue
+
+        metric = goal.metric.value
+        period = goal.period.value
+        n = Notification(
+            user_id=user_id,
+            title="Goal achieved!",
+            body=(
+                f"{key}\n"
+                f"You completed your {period} {metric} goal "
+                f"({prog.current_value:g} / {goal.target_value:g}). Keep it up!"
+            ),
+            kind=NotificationKind.achievement,
+        )
+        db.add(n)
+        created.append(n)
+
+    if created:
+        db.commit()
+    return created
 
 
 def build_trends(db: Session, user_id: int, range_days: int) -> list[TrendPoint]:

@@ -34,6 +34,8 @@ class ProfileUpdate(BaseModel):
     age: int | None = Field(default=None, ge=10, le=120)
     fitness_level: str | None = Field(default=None, pattern="^(beginner|intermediate|advanced)$")
     daily_step_target: int | None = Field(default=None, ge=1000, le=100000)
+    daily_calorie_target: float | None = Field(default=None, gt=0, le=10000)
+    daily_workout_target: int | None = Field(default=None, ge=1, le=50)
 
 
 class ProfileOut(BaseModel):
@@ -42,6 +44,10 @@ class ProfileOut(BaseModel):
     age: int | None
     fitness_level: str
     daily_step_target: int
+    daily_calorie_target: float
+    daily_workout_target: int
+    avatar_url: str | None = None
+    is_complete: bool = False
 
 
 class StepsSync(BaseModel):
@@ -150,3 +156,29 @@ class AdminStatsOut(BaseModel):
     total_activities: int
     total_goals: int
     active_members: int
+    today_platform_steps: int
+    today_platform_calories: float
+    today_platform_workouts: int
+    profiles_complete: int
+
+
+class AdminUserOut(BaseModel):
+    id: str
+    name: str
+    email: str
+    role: str
+    avatar_url: str | None
+    fitness_level: str | None
+    profile_complete: bool
+    daily_step_target: int
+    daily_calorie_target: float
+    daily_workout_target: int
+    today_steps: int
+    today_calories: float
+    today_workouts: int
+    streak_days: int
+    total_activities: int
+    total_goals: int
+    last_active: str | None
+    active_goals: list[GoalOut]
+    recent_activities: list[ActivityOut]

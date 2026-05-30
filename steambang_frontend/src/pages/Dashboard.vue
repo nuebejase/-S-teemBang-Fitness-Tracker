@@ -1,27 +1,53 @@
 <script setup lang="ts">
-import { computed, ref } from 'vue'
+import { computed, onMounted, ref, watch } from 'vue'
 import { RouterLink } from 'vue-router'
+import Avatar from '@/components/Avatar.vue'
 import Button from '@/components/ui/Button.vue'
 import Card from '@/components/ui/Card.vue'
-import StatCard from '@/components/StatCard.vue'
+import ProgressRing from '@/components/ProgressRing.vue'
 import TrendChart from '@/components/TrendChart.vue'
+import { usePedometer } from '@/composables/usePedometer'
 import { useAppStore } from '@/stores/appStore'
 import { formatNumber } from '@/lib/utils'
-import { Activity, Flame, Footprints, Target, TrendingUp, Dumbbell } from 'lucide-vue-next'
+import type { Goal } from '@/types/domain'
+import { Flame, Footprints, Target, Dumbbell, Sparkles } from 'lucide-vue-next'
 import { toast } from 'vue-sonner'
 
 const store = useAppStore()
+const pedometer = usePedometer()
 const stepInput = ref(0)
 const syncing = ref(false)
 
 const dash = computed(() => store.dashboard)
 const profile = computed(() => store.profile)
 const guest = computed(() => !store.user)
-const stepTarget = computed(() => profile.value?.dailyStepTarget ?? 8000)
-const stepProgress = computed(() => {
-  if (!dash.value) return 0
-  return Math.min(100, Math.round((dash.value.todaySteps / stepTarget.value) * 100))
+
+function dailyTarget(metric: Goal['metric'], profileFallback: number) {
+  const goal = store.goals.find((g) => g.period === 'daily' && g.metric === metric && g.isActive)
+  return goal?.targetValue ?? profileFallback
+}
+
+const stepTarget = computed(() => dailyTarget('steps', profile.value?.dailyStepTarget ?? 8000))
+const calorieTarget = computed(() => dailyTarget('calories', profile.value?.dailyCalorieTarget ?? 500))
+const workoutTarget = computed(() => dailyTarget('workouts', profile.value?.dailyWorkoutTarget ?? 1))
+
+const stepProgress = computed(() =>
+  dash.value ? Math.min(100, Math.round((dash.value.todaySteps / stepTarget.value) * 100)) : 0,
+)
+
+onMounted(async () => {
+  if (store.user?.role === 'member') {
+    await Promise.all([store.refreshProfile(), store.refreshGoals(), store.refreshDashboard()])
+  }
 })
+
+watch(
+  () => dash.value?.todaySteps,
+  (steps) => {
+    if (steps !== undefined && stepInput.value === 0) stepInput.value = steps
+  },
+  { immediate: true },
+)
 
 async function syncSteps() {
   if (stepInput.value <= 0) {
@@ -32,7 +58,6 @@ async function syncSteps() {
   try {
     await store.syncSteps(stepInput.value)
     toast.success('Steps synced!')
-    await store.refreshDashboard()
   } catch (e) {
     toast.error(e instanceof Error ? e.message : 'Sync failed')
   } finally {
@@ -40,144 +65,139 @@ async function syncSteps() {
   }
 }
 
-function useDeviceSteps() {
-  if (typeof window !== 'undefined' && 'DeviceMotionEvent' in window) {
-    stepInput.value = Math.min(12000, (dash.value?.todaySteps ?? 0) + Math.floor(Math.random() * 800) + 200)
-    toast.info('Simulated pedometer reading — tap Sync to save')
-  } else {
-    toast.info('Device motion unavailable in this browser; enter steps manually')
+async function togglePedometer() {
+  if (pedometer.tracking.value) {
+    pedometer.stop()
+    stepInput.value = (dash.value?.todaySteps ?? 0) + pedometer.sessionSteps.value
+    toast.info(`+${pedometer.sessionSteps.value} steps added — tap Sync to save`)
+    return
   }
+  pedometer.reset()
+  await pedometer.start()
+  toast.success('Walk simulation running — tap Stop when done')
 }
+
+watch(pedometer.sessionSteps, (n) => {
+  if (pedometer.tracking.value) {
+    stepInput.value = (dash.value?.todaySteps ?? 0) + n
+  }
+})
 </script>
 
 <template>
   <div>
-    <section class="bg-gradient-to-br from-emerald-50 via-teal-50 to-cyan-50 py-14">
-      <div class="container mx-auto px-4">
-        <div class="max-w-3xl">
-          <p class="text-emerald-700 font-semibold text-sm uppercase tracking-wide mb-2">Fitness Tracking</p>
-          <h1 class="text-4xl md:text-5xl font-bold text-gray-900 mb-4">
-            Move smarter with
-            <span class="text-emerald-600">(S)TeemBang</span>
-          </h1>
-          <p class="text-lg text-gray-600 mb-8">
-            Track steps, log workouts, set measurable goals, and visualize your progress — built for health-conscious
-            students and professionals.
-          </p>
-          <div v-if="guest" class="flex flex-wrap gap-3">
-            <RouterLink to="/register"><Button size="lg">Get started free</Button></RouterLink>
-            <RouterLink to="/login"><Button size="lg" variant="outline">Sign in</Button></RouterLink>
-            <RouterLink to="/about"><Button size="lg" variant="ghost">About the project</Button></RouterLink>
-          </div>
+    <section v-if="guest" class="relative py-20 px-4 overflow-hidden">
+      <div class="absolute inset-0 bg-gradient-to-b from-emerald-500/10 via-transparent to-transparent pointer-events-none" />
+      <div class="container mx-auto max-w-3xl relative text-center">
+        <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-emerald-500/10 border border-emerald-500/20 text-emerald-300 text-xs font-semibold uppercase tracking-wider mb-6">
+          <Sparkles class="w-3.5 h-3.5" /> Premium fitness tracking
+        </div>
+        <h1 class="text-4xl md:text-6xl font-bold tracking-tight mb-5">
+          Train smarter with
+          <span class="gradient-text block mt-1">(S)TeemBang</span>
+        </h1>
+        <p class="text-lg text-muted-foreground mb-10 max-w-xl mx-auto">
+          Track steps, log workouts, crush goals, and visualize your progress.
+        </p>
+        <div class="flex flex-wrap justify-center gap-3">
+          <RouterLink to="/register"><Button size="lg">Get started</Button></RouterLink>
+          <RouterLink to="/login"><Button size="lg" variant="outline">Sign in</Button></RouterLink>
         </div>
       </div>
     </section>
 
-    <section v-if="guest" class="container mx-auto px-4 py-12 grid md:grid-cols-3 gap-6">
-      <Card class="p-6">
-        <Footprints class="w-8 h-8 text-emerald-600 mb-3" />
-        <h3 class="font-semibold text-lg mb-2">Activity tracking</h3>
-        <p class="text-muted-foreground text-sm">Log steps and workouts with automatic calorie estimates.</p>
-      </Card>
-      <Card class="p-6">
-        <Target class="w-8 h-8 text-emerald-600 mb-3" />
-        <h3 class="font-semibold text-lg mb-2">Goal setting</h3>
-        <p class="text-muted-foreground text-sm">Daily, weekly, and monthly targets you can actually hit.</p>
-      </Card>
-      <Card class="p-6">
-        <TrendingUp class="w-8 h-8 text-emerald-600 mb-3" />
-        <h3 class="font-semibold text-lg mb-2">Analytics dashboard</h3>
-        <p class="text-muted-foreground text-sm">Charts and trends for long-term engagement.</p>
-      </Card>
-    </section>
-
-    <section v-else-if="store.user?.role === 'member'" class="container mx-auto px-4 py-8 space-y-8">
-      <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
-        <StatCard
-          label="Today's steps"
-          :value="formatNumber(dash?.todaySteps ?? 0)"
-          :sub="`${stepProgress}% of ${formatNumber(stepTarget)} goal`"
-          :icon="Footprints"
-        />
-        <StatCard
-          label="Calories burned"
-          :value="String(dash?.todayCalories ?? 0)"
-          sub="Today"
-          :icon="Flame"
-          accent="bg-orange-100 text-orange-600"
-        />
-        <StatCard
-          label="Workouts"
-          :value="String(dash?.todayWorkouts ?? 0)"
-          sub="Today"
-          :icon="Dumbbell"
-          accent="bg-blue-100 text-blue-600"
-        />
-        <StatCard
-          label="Streak"
-          :value="`${dash?.streakDays ?? 0} days`"
-          sub="Keep it going!"
-          :icon="Activity"
-          accent="bg-violet-100 text-violet-600"
-        />
+    <section v-else-if="store.user?.role === 'member'" class="container mx-auto px-4 py-8 max-w-5xl space-y-8">
+      <div class="flex items-center justify-between gap-4">
+        <div>
+          <p class="premium-label">Welcome back</p>
+          <h1 class="text-2xl md:text-3xl font-bold tracking-tight mt-1">{{ store.user.name.split(' ')[0] }} 👋</h1>
+        </div>
+        <RouterLink to="/profile">
+          <Avatar :name="store.user.name" :src="profile?.avatarUrl" size="lg" ring />
+        </RouterLink>
       </div>
+
+      <!-- Daily goals — steps, calories, workouts -->
+      <Card class="p-6 md:p-8">
+        <h2 class="font-semibold mb-6">Today's daily goals</h2>
+        <div class="grid grid-cols-3 gap-4 md:gap-8">
+          <ProgressRing
+            :value="dash?.todaySteps ?? 0"
+            :max="stepTarget"
+            label="Steps"
+            :sublabel="`/ ${formatNumber(stepTarget)}`"
+            :icon="Footprints"
+            color="emerald"
+            size="sm"
+          />
+          <ProgressRing
+            :value="dash?.todayCalories ?? 0"
+            :max="calorieTarget"
+            label="Calories"
+            :sublabel="`/ ${calorieTarget} kcal`"
+            :icon="Flame"
+            color="orange"
+            size="sm"
+          />
+          <ProgressRing
+            :value="dash?.todayWorkouts ?? 0"
+            :max="workoutTarget"
+            label="Workouts"
+            :sublabel="`/ ${workoutTarget} session${workoutTarget > 1 ? 's' : ''}`"
+            :icon="Dumbbell"
+            color="blue"
+            size="sm"
+          />
+        </div>
+      </Card>
+
+      <!-- Steps sync -->
+      <Card class="p-6">
+        <h3 class="font-semibold mb-3 flex items-center gap-2">
+          <Footprints class="w-5 h-5 text-emerald-400" /> Log steps
+        </h3>
+        <div class="flex flex-wrap gap-2 items-center">
+          <input v-model.number="stepInput" type="number" min="0" class="premium-input flex-1 min-w-[120px] max-w-[180px]" placeholder="Steps" />
+          <Button variant="outline" size="sm" @click="togglePedometer">
+            {{ pedometer.tracking.value ? `Stop (+${pedometer.sessionSteps.value})` : 'Simulate walk' }}
+          </Button>
+          <Button size="sm" :disabled="syncing" @click="syncSteps">{{ syncing ? '…' : 'Sync' }}</Button>
+        </div>
+        <p class="text-xs text-muted-foreground mt-2">{{ stepProgress }}% of daily step target</p>
+      </Card>
 
       <div class="grid lg:grid-cols-2 gap-6">
         <Card class="p-6">
-          <h2 class="font-semibold text-lg mb-4 flex items-center gap-2">
-            <Footprints class="w-5 h-5 text-emerald-600" /> Sync steps (pedometer)
-          </h2>
-          <p class="text-sm text-muted-foreground mb-4">
-            Update today's step count from your device or enter manually.
-          </p>
-          <div class="flex flex-wrap gap-3 items-end">
-            <div class="flex-1 min-w-[140px]">
-              <label class="text-xs font-medium text-muted-foreground">Steps</label>
-              <input
-                v-model.number="stepInput"
-                type="number"
-                min="0"
-                class="mt-1 w-full px-3 py-2 rounded-lg border bg-background"
-                placeholder="e.g. 6500"
-              />
-            </div>
-            <Button variant="outline" @click="useDeviceSteps">Read device</Button>
-            <Button :disabled="syncing" @click="syncSteps">{{ syncing ? 'Syncing…' : 'Sync' }}</Button>
-          </div>
-          <div class="mt-4 h-2 rounded-full bg-muted overflow-hidden">
-            <div class="h-full bg-emerald-500 transition-all" :style="{ width: `${stepProgress}%` }" />
-          </div>
-        </Card>
-
-        <Card class="p-6">
-          <div class="flex justify-between items-center mb-4">
-            <h2 class="font-semibold text-lg">14-day steps</h2>
-            <RouterLink to="/analytics" class="text-sm text-emerald-600 hover:underline">View all</RouterLink>
+          <div class="flex justify-between items-center mb-5">
+            <h2 class="font-semibold">14-day trend</h2>
+            <RouterLink to="/analytics" class="text-xs text-emerald-400 hover:underline font-medium">Full analytics →</RouterLink>
           </div>
           <TrendChart v-if="store.trends.length" :points="store.trends" metric="steps" />
-          <p v-else class="text-sm text-muted-foreground">Log activity to see trends.</p>
+          <p v-else class="text-sm text-muted-foreground text-center py-8">Log activity to unlock trends.</p>
+        </Card>
+
+        <Card v-if="dash?.activeGoals?.length" class="p-6">
+          <div class="flex justify-between items-center mb-5">
+            <h2 class="font-semibold">Active goals</h2>
+            <RouterLink to="/goals"><Button variant="outline" size="sm">Manage</Button></RouterLink>
+          </div>
+          <div class="space-y-4">
+            <div v-for="g in dash.activeGoals" :key="g.id">
+              <div class="flex justify-between text-sm mb-1.5">
+                <span class="capitalize text-muted-foreground">{{ g.period }} {{ g.metric }}</span>
+                <span class="font-medium">{{ g.progressPercent }}%</span>
+              </div>
+              <div class="h-2 rounded-full bg-muted overflow-hidden">
+                <div class="h-full bg-gradient-to-r from-emerald-500 to-cyan-400 rounded-full transition-all" :style="{ width: `${g.progressPercent}%` }" />
+              </div>
+            </div>
+          </div>
         </Card>
       </div>
 
-      <Card v-if="dash?.activeGoals?.length" class="p-6">
-        <div class="flex justify-between items-center mb-4">
-          <h2 class="font-semibold text-lg">Active goals</h2>
-          <RouterLink to="/goals"><Button variant="outline" size="sm">Manage</Button></RouterLink>
-        </div>
-        <div class="grid md:grid-cols-3 gap-4">
-          <div v-for="g in dash.activeGoals" :key="g.id" class="rounded-lg border p-4">
-            <p class="text-sm text-muted-foreground capitalize">{{ g.period }} {{ g.metric }}</p>
-            <p class="font-bold mt-1">{{ formatNumber(g.currentValue) }} / {{ formatNumber(g.targetValue) }}</p>
-            <div class="mt-2 h-2 rounded-full bg-muted overflow-hidden">
-              <div class="h-full bg-emerald-500" :style="{ width: `${g.progressPercent}%` }" />
-            </div>
-            <p class="text-xs text-muted-foreground mt-1">{{ g.progressPercent }}% complete</p>
-          </div>
-        </div>
-      </Card>
-
       <div class="flex flex-wrap gap-3">
         <RouterLink to="/workouts"><Button><Dumbbell class="w-4 h-4 mr-2" /> Log workout</Button></RouterLink>
+        <RouterLink to="/goals"><Button variant="outline"><Target class="w-4 h-4 mr-2" /> Goals</Button></RouterLink>
         <RouterLink to="/activities"><Button variant="outline">Activity history</Button></RouterLink>
       </div>
     </section>
