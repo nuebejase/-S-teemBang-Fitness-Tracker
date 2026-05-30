@@ -1,9 +1,0 @@
-{
-  "backend_command": "cd steambang_backend && .venv\\Scripts\\python.exe -m pytest tests -v --tb=short",
-  "expected_tests": [
-    "test_health",
-    "test_register_login_dashboard",
-    "test_demo_user_seeded",
-    "test_admin_stats"
-  ]
-}

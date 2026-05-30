@@ -1,6 +1,0 @@
-{
-  "date": "2026-05-16",
-  "frontend": "http://localhost:5173",
-  "backend_health": "GET /api/health -> ok",
-  "notes": "Manual smoke for SBD-001, SBN-001, SBP-001, SBS-001, SBGen-002"
-}
